@@ -141,4 +141,4 @@ pip3 install -r requirements.txt
 pip install -r requirements.txt
 
 ```
-3. Run src/main.py.
+3. Run `src/main.py`.
