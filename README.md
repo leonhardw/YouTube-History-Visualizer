@@ -54,7 +54,8 @@ Views
 2. Run the program:
    - **Windows**: Download the latest `.exe` from the [releases](https://github.com/leonhardw/YouTube-History-Visualizer/releases), unzip and run `YouTube-History-Visualizer.exe`.
      ## ⚠️ Note on Security Warnings (False Positives)
-     When downloading the Windows release, you might receive a warning from Windows Defender or SmartScreen (e.g., "Windows protected your PC" or "Unknown Publisher"). **To launch the program, click on "More info" and then select "Run anyway".**
+     When downloading the Windows release, you might receive a warning from Windows Defender or SmartScreen (e.g., "Windows protected your PC" or "Unknown Publisher").  
+     **To launch the program, click on "More info" and then select "Run anyway".**
 
      #### Why is this happening and why should I trust you?
      This is a false positive. Most antivirus programs flag new, unsigned executables as suspicious by default. Since this project is open-source and not digitally signed with a costly Microsoft certificate, Windows treats it with caution.
