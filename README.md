@@ -1,3 +1,5 @@
+[![License: AGPL v3+](https://img.shields.io/badge/License-AGPL_v3+-green.svg)](https://www.gnu.org/licenses/agpl-3.0)
+
 # YouTube History Visualizer
 
 - [Quick Start](#quick-start)  
@@ -17,6 +19,9 @@ All data except API requests (needs API key, disabled by default) is processed e
 - Additional metadata from YouTube API (optional)
 
 ## Screenshots
+<details>
+<summary>Click here to show screenshots</summary>
+
 ### Filters
 <img width="40%" alt="Filters" src="https://github.com/leonhardw/YouTube-History-Visualizer/blob/main/images/filters.png" /> 
 
@@ -35,12 +40,13 @@ Time of day
 Views  
 <img alt="Watched filters" src="https://github.com/leonhardw/YouTube-History-Visualizer/blob/main/images/plot2.png" />
 
+</details>
 
 
 ## Quick Start
 1. Request your YouTube History from [Google Takeout](https://takeout.google.com):
    - You can unselect everything except "YouTube and YouTube Music".
-   - Click on "Multiple formats", find "History", and ensure HTML is selected for History (JSON is not supported).
+   - Click on "Multiple formats", find "History", and ensure HTML is selected for History **(JSON is not supported)**.
    - Click on "All YouTube data included" and select only "History" (you can of course select more but this program doesn't need the other files).
    - Request the data.
    - Download and unzip the provided file once Google notifies you (this may take some time).
@@ -71,6 +77,9 @@ This requires you to create an API key on [Google Cloud Console](https://console
 *Note: This is entirely optional. Basic history analysis works without it.*  
 
 ### How to Get Your YouTube API Key
+<details>
+<summary>Click here to extend API Key tutorial</summary>
+
 *Every API key has a free limit of 10,000 tokens per day. Fetching metadata for 50 videos consumes 1 token.
 That means you can fetch metadata for 500,000 videos per day which should be more than enough.*  
   
@@ -101,6 +110,8 @@ Follow these steps to generate your own API key:
    - Choose YouTube Data API v3 from the dropdown menu.
    - Click Save.
 
+</details>
+
 ## Run from source
 Requirements:
 Python 3.12 (other versions may work too)
@@ -114,15 +125,19 @@ git clone https://github.com/YOUR_USERNAME/YouTube-History-Visualizer.git
 cd YouTube-History-Visualizer
 
 # Create a virtual environment (optional)
+# On Linux/macOS:
 python3 -m venv venv
 source venv/bin/activate
+
 # On Windows:
-# python -m venv venv
-# venv\Scripts\activate
+python -m venv venv
+venv\Scripts\activate
 
 # Install dependencies
+# On Linux/macOS:
 pip3 install -r requirements.txt
-# On Windows: pip install -r requirements.txt
+# On Windows:
+pip install -r requirements.txt
 
 ```
 3. Run src/main.py.
