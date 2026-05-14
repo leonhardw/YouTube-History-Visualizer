@@ -75,20 +75,23 @@ Requirements:
 Python 3.12 (other versions may work too)
 
 1. Download or clone the repository using the green `Code` button or by running
-```
+```bash
 git clone https://github.com/YOUR_USERNAME/YouTube-History-Visualizer.git
 ```
 2. Set up your environment
-```
+```bash
 cd YouTube-History-Visualizer
+
 # Create a virtual environment (optional)
-python -m venv venv
+python3 -m venv venv
 source venv/bin/activate
-# On Windows: venv\Scripts\activate
+# On Windows:
+# python -m venv venv
+# venv\Scripts\activate
 
 # Install dependencies
 pip3 install -r requirements.txt
-# On Windows, use pip instead of pip3
+# On Windows: pip install -r requirements.txt
 
 ```
 3. Run src/main.py.
