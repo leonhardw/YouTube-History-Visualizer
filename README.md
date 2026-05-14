@@ -1,0 +1,93 @@
+# YouTube History Visualizer
+
+- [Quick Start](#quick-start)  
+- [Using filters](#using-filters)
+- [Run from source](#run-from-source)
+
+
+A desktop application written in Python with PySide6 to parse, analyze and visualize your personal YouTube watch history requested via [Google Takeout](https://takeout.google.com) as matplotlib charts.  
+The application converts the HTML export into a local database file (serialized Python objects) for fast access and filtering.  
+All data except API requests (needs API key, disabled by default) is processed entirely locally.
+
+**Key features**:
+- Local processing
+- Advanced filtering (AND/OR logic)
+- Multiple charts
+- Additional metadata from YouTube API (optional)
+
+## Screenshots
+### Filters
+<img width="40%" alt="Filters" src="https://github.com/leonhardw/YouTube-History-Visualizer/blob/main/images/filters.png" /> 
+
+### View as table (with filters applied)
+<img alt="Watched filters" src="https://github.com/leonhardw/YouTube-History-Visualizer/blob/main/images/table.png" />
+
+### Filter options
+<img width="40%" alt="Property filters" src="https://github.com/leonhardw/YouTube-History-Visualizer/blob/main/images/filters2.png" /> <img width="40%" alt="Watched filters" src="https://github.com/leonhardw/YouTube-History-Visualizer/blob/main/images/filters3.png" /> <img width="40%" alt="Uploaded filters" src="https://github.com/leonhardw/YouTube-History-Visualizer/blob/main/images/filters4.png" />
+
+### Possible plots
+<img width="40%" alt="Watched filters" src="https://github.com/leonhardw/YouTube-History-Visualizer/blob/main/images/plots.png" />
+
+### Example plots
+Time of day  
+<img alt="Watched filters" src="https://github.com/leonhardw/YouTube-History-Visualizer/blob/main/images/plot.png" />
+Views  
+<img alt="Watched filters" src="https://github.com/leonhardw/YouTube-History-Visualizer/blob/main/images/plot2.png" />
+
+
+
+## Quick Start
+1. Request your YouTube History from [Google Takeout](https://takeout.google.com):
+   - You can unselect everything except "YouTube and YouTube Music".
+   - Click on "Multiple formats", find "History", and ensure HTML is selected for History (JSON is not supported).
+   - Click on "All YouTube data included" and select only "History" (you can of course select more but this program doesn't need the other files).
+   - Request the data.
+   - Download and unzip the provided file once Google notifies you (this may take some time).
+2. Run the program:
+   - **Windows**: Download the latest `.exe` from the [releases](https://github.com/leonhardw/YouTube-History-Visualizer/releases), unzip and run `YouTube-History-Visualizer.exe`.
+   - **From source**: See [Run from source](#run-from-source) below.
+
+3. Open the app and click "Create database from Takeout".
+4. Select your `watch-history.html` (found in `Takeout/YouTube and YouTube Music/History`).
+If you want to, you can add additional metadata to the videos to perform more analysis on them by using an API key for the YouTube API. See the [Additional metadata](#additional-metadata) section below for explanation. Note that this is entirely optional.
+5. Select a save path for the database; it will load automatically once created.
+6. You can apply filters to your data before plotting. See [Advanced filtering](#using-filters) below for more information.
+7. Use the Analysis tab to generate plots. Press <kbd>Enter</kbd> or click "Show plot" to view results. You can also save the plot as a PNG file.
+
+## Using filters
+The app uses a flexible logic for filters:  
+**Inside a filter**: All criteria must be met (AND logic).  
+**Between multiple filters**: An item is shown if it matches any of the filters (OR logic).  
+  
+Example:  
+- Filter 1: Duration > 5:00 AND Language: "en"  
+- Filter 2: Music Videos AND Views > 100,000  
+Result: Shows videos that are either long English videos OR popular music tracks.  
+
+## Additional metadata
+To perform deeper analysis (e.g., filtering by upload date, total views, language or duration), you can integrate the YouTube API:
+This requires you to create an API key on https://console.cloud.google.com ([Instructions](https://github.com/code-charity/youtube/wiki/%F0%9F%9B%88-YouTube-API:--How-to-generate-your-Youtube-API-key))  
+*Note: This is entirely optional. Basic history analysis works without it.*  
+
+## Run from source
+Requirements:
+Python 3.12 (other versions may work too)
+
+1. Download or clone the repository using the green `Code` button or by running
+```
+git clone https://github.com/YOUR_USERNAME/YouTube-History-Visualizer.git
+```
+2. Set up your environment
+```
+cd YouTube-History-Visualizer
+# Create a virtual environment (optional)
+python -m venv venv
+source venv/bin/activate
+# On Windows: venv\Scripts\activate
+
+# Install dependencies
+pip3 install -r requirements.txt
+# On Windows, use pip instead of pip3
+
+```
+3. Run src/main.py.

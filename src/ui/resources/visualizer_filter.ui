@@ -1,0 +1,1377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>660</width>
+    <height>510</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="sizeGripEnabled">
+   <bool>true</bool>
+  </property>
+  <property name="modal">
+   <bool>true</bool>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_3">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="spacing">
+      <number>10</number>
+     </property>
+     <item>
+      <widget class="QTabWidget" name="tabWidget">
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <widget class="QWidget" name="property_filters_tab">
+        <attribute name="title">
+         <string>Property filters</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_5">
+         <item>
+          <layout class="QGridLayout" name="properties_grid" columnstretch="0,0,0,0,0">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="horizontalSpacing">
+            <number>6</number>
+           </property>
+           <item row="1" column="1">
+            <widget class="QComboBox" name="channel_combo">
+             <item>
+              <property name="text">
+               <string>contains</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>does not contain</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QCheckBox" name="views_cb">
+             <property name="text">
+              <string>Total views</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QCheckBox" name="channel_cb">
+             <property name="text">
+              <string>Channel name</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QComboBox" name="userviews_combo">
+             <item>
+              <property name="text">
+               <string>in range</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>not in range</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="6" column="4">
+            <widget class="QTimeEdit" name="duration_max">
+             <property name="showGroupSeparator" stdset="0">
+              <bool>true</bool>
+             </property>
+             <property name="currentSection">
+              <enum>QDateTimeEdit::Section::HourSection</enum>
+             </property>
+             <property name="displayFormat">
+              <string>HH:mm:ss</string>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="0">
+            <widget class="QLabel" name="label_3">
+             <property name="text">
+              <string>Availability:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="0">
+            <widget class="QCheckBox" name="duration_cb">
+             <property name="text">
+              <string>Video duration</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="4">
+            <widget class="QSpinBox" name="userviews_max">
+             <property name="showGroupSeparator" stdset="0">
+              <bool>true</bool>
+             </property>
+             <property name="maximum">
+              <number>100000</number>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="1" colspan="4">
+            <layout class="QHBoxLayout" name="availability_hbox">
+             <item>
+              <widget class="QRadioButton" name="available_rb">
+               <property name="text">
+                <string>Available</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+               <attribute name="buttonGroup">
+                <string notr="true">availability_group</string>
+               </attribute>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="deleted_rb">
+               <property name="text">
+                <string>Deleted</string>
+               </property>
+               <attribute name="buttonGroup">
+                <string notr="true">availability_group</string>
+               </attribute>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="availability_both_rb">
+               <property name="text">
+                <string>Both</string>
+               </property>
+               <attribute name="buttonGroup">
+                <string notr="true">availability_group</string>
+               </attribute>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="2" column="4">
+            <widget class="IntegerOnlyDoubleSpinBox" name="views_max">
+             <property name="showGroupSeparator" stdset="0">
+              <bool>true</bool>
+             </property>
+             <property name="decimals">
+              <number>0</number>
+             </property>
+             <property name="maximum">
+              <double>30000000000.000000000000000</double>
+             </property>
+             <property name="singleStep">
+              <double>1000.000000000000000</double>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QCheckBox" name="userviews_cb">
+             <property name="text">
+              <string>My views</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="1" colspan="4">
+            <layout class="QHBoxLayout" name="platform_hbox">
+             <item>
+              <widget class="QRadioButton" name="youtube_rb">
+               <property name="text">
+                <string>YouTube</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+               <attribute name="buttonGroup">
+                <string notr="true">platform_group</string>
+               </attribute>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="music_rb">
+               <property name="text">
+                <string>YouTube Music</string>
+               </property>
+               <attribute name="buttonGroup">
+                <string notr="true">platform_group</string>
+               </attribute>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="platform_both_rb">
+               <property name="text">
+                <string>Both</string>
+               </property>
+               <attribute name="buttonGroup">
+                <string notr="true">platform_group</string>
+               </attribute>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="5" column="0">
+            <widget class="QCheckBox" name="languages_cb">
+             <property name="text">
+              <string>Languages</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QCheckBox" name="userviews_channel_cb">
+             <property name="text">
+              <string>My views per channel</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="1">
+            <widget class="QComboBox" name="languages_combo">
+             <item>
+              <property name="text">
+               <string>include</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>exclude</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QCheckBox" name="title_cb">
+             <property name="text">
+              <string>Title</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="0">
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>Platform:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="1">
+            <widget class="QComboBox" name="duration_combo">
+             <item>
+              <property name="text">
+               <string>in range</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>not in range</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QComboBox" name="views_combo">
+             <item>
+              <property name="text">
+               <string>in range</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>not in range</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QComboBox" name="userviews_channel_combo">
+             <item>
+              <property name="text">
+               <string>in range</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>not in range</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QComboBox" name="title_combo">
+             <item>
+              <property name="text">
+               <string>contains</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>does not contain</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="4" column="4">
+            <widget class="QSpinBox" name="userviews_channel_max">
+             <property name="showGroupSeparator" stdset="0">
+              <bool>true</bool>
+             </property>
+             <property name="maximum">
+              <number>100000</number>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="IntegerOnlyDoubleSpinBox" name="views_min">
+             <property name="showGroupSeparator" stdset="0">
+              <bool>true</bool>
+             </property>
+             <property name="decimals">
+              <number>0</number>
+             </property>
+             <property name="maximum">
+              <double>30000000000.000000000000000</double>
+             </property>
+             <property name="singleStep">
+              <double>1000.000000000000000</double>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="2">
+            <widget class="QSpinBox" name="userviews_min">
+             <property name="showGroupSeparator" stdset="0">
+              <bool>true</bool>
+             </property>
+             <property name="maximum">
+              <number>100000</number>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="2">
+            <widget class="QSpinBox" name="userviews_channel_min">
+             <property name="showGroupSeparator" stdset="0">
+              <bool>true</bool>
+             </property>
+             <property name="maximum">
+              <number>100000</number>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="2">
+            <widget class="QTimeEdit" name="duration_min">
+             <property name="inputMethodHints">
+              <set>Qt::InputMethodHint::ImhPreferNumbers</set>
+             </property>
+             <property name="showGroupSeparator" stdset="0">
+              <bool>true</bool>
+             </property>
+             <property name="currentSection">
+              <enum>QDateTimeEdit::Section::HourSection</enum>
+             </property>
+             <property name="displayFormat">
+              <string>HH:mm:ss</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="3" alignment="Qt::AlignmentFlag::AlignHCenter">
+            <widget class="QLabel" name="label_4">
+             <property name="text">
+              <string>to</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="3" alignment="Qt::AlignmentFlag::AlignHCenter">
+            <widget class="QLabel" name="label_5">
+             <property name="text">
+              <string>to</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="3" alignment="Qt::AlignmentFlag::AlignHCenter">
+            <widget class="QLabel" name="label_6">
+             <property name="text">
+              <string>to</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="3" alignment="Qt::AlignmentFlag::AlignHCenter">
+            <widget class="QLabel" name="label_7">
+             <property name="text">
+              <string>to</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="2" colspan="3">
+            <widget class="QLineEdit" name="languages_edit">
+             <property name="placeholderText">
+              <string>ISO codes, e.g. en, de, fr</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2" colspan="3">
+            <layout class="QHBoxLayout" name="channel_hbox">
+             <item>
+              <widget class="QCheckBox" name="channel_regex_cb">
+               <property name="text">
+                <string>RegEx</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="channel_edit"/>
+             </item>
+            </layout>
+           </item>
+           <item row="0" column="2" colspan="3">
+            <layout class="QHBoxLayout" name="title_hbox">
+             <item>
+              <widget class="QCheckBox" name="title_regex_cb">
+               <property name="text">
+                <string>RegEx</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="title_edit"/>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="watched_filters_tab">
+        <attribute name="title">
+         <string>Watched filters</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <item>
+          <widget class="QGroupBox" name="date_watched_box">
+           <property name="title">
+            <string>Watched: Date Range</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout">
+            <item>
+             <layout class="QHBoxLayout" name="date_watched_date_hbox">
+              <item>
+               <widget class="QLabel" name="label_2">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>From:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="date_watched_set_oldest_btn">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Set to oldest</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QDateEdit" name="date_watched_from">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="calendarPopup">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_8">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>To:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QDateEdit" name="date_watched_to">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="calendarPopup">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="date_watched_set_newest_btn">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Set to newest</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="date_watched_mode_hbox">
+              <item>
+               <widget class="QRadioButton" name="date_watched_include_rb">
+                <property name="text">
+                 <string>Include range</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+                <attribute name="buttonGroup">
+                 <string notr="true">include_date_watched_group</string>
+                </attribute>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="date_watched_exclude_rb">
+                <property name="text">
+                 <string>Exclude range</string>
+                </property>
+                <attribute name="buttonGroup">
+                 <string notr="true">include_date_watched_group</string>
+                </attribute>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="time_watched_box">
+           <property name="title">
+            <string>Watched: Time Range</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_8">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_2">
+              <item>
+               <widget class="QLabel" name="label_10">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>From:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="watched_time_range_min_btn">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>00:00</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QTimeEdit" name="watched_time_range_min_edit"/>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_12">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>To:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QTimeEdit" name="watched_time_range_max_edit"/>
+              </item>
+              <item>
+               <widget class="QPushButton" name="watched_time_range_max_btn">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>23:59</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_9">
+              <item>
+               <widget class="QRadioButton" name="watched_time_range_include_rb">
+                <property name="text">
+                 <string>Include range</string>
+                </property>
+                <attribute name="buttonGroup">
+                 <string notr="true">include_time_watched_group</string>
+                </attribute>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="watched_time_range_exclude_rb">
+                <property name="text">
+                 <string>Exclude range</string>
+                </property>
+                <attribute name="buttonGroup">
+                 <string notr="true">include_time_watched_group</string>
+                </attribute>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_3">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="days_of_month_watched_box">
+           <property name="title">
+            <string>Watched: Days of Month</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <item>
+             <widget class="QLineEdit" name="days_of_month_watched_edit">
+              <property name="placeholderText">
+               <string>comma-separated or range (e.g. 3, 5, 8-10, 12)</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="months_watched_box">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="title">
+            <string>Watched: Months</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <item>
+             <widget class="QLineEdit" name="months_watched_edit">
+              <property name="placeholderText">
+               <string>comma-separated or range (e.g. 3, 5, 8-10, 12)</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="weekdays_watched_box">
+           <property name="title">
+            <string>Watched: Weekdays</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <item>
+             <widget class="QCheckBox" name="weekdays_watched_mon">
+              <property name="text">
+               <string>Mon</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="weekdays_watched_tue">
+              <property name="text">
+               <string>Tue</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="weekdays_watched_wed">
+              <property name="text">
+               <string>Wed</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="weekdays_watched_thu">
+              <property name="text">
+               <string>Thu</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="weekdays_watched_fri">
+              <property name="text">
+               <string>Fri</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="weekdays_watched_sat">
+              <property name="text">
+               <string>Sat</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="weekdays_watched_sun">
+              <property name="text">
+               <string>Sun</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="uploaded_filters_tab">
+        <attribute name="title">
+         <string>Uploaded filters</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_7">
+         <item>
+          <widget class="QGroupBox" name="date_uploaded_box">
+           <property name="title">
+            <string>Uploaded: Date Range</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_6">
+            <item>
+             <layout class="QHBoxLayout" name="date_uploaded_date_hbox">
+              <item>
+               <widget class="QLabel" name="label_11">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>From:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="date_uploaded_set_oldest_btn">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Set to oldest</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QDateEdit" name="date_uploaded_from">
+                <property name="calendarPopup">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_9">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>To:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QDateEdit" name="date_uploaded_to">
+                <property name="calendarPopup">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="date_uploaded_set_newest_btn">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Set to newest</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="date_uploaded_mode_hbox">
+              <item>
+               <widget class="QRadioButton" name="date_uploaded_include_rb">
+                <property name="text">
+                 <string>Include range</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+                <attribute name="buttonGroup">
+                 <string notr="true">include_date_uploaded_group</string>
+                </attribute>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="date_uploaded_exclude_rb">
+                <property name="text">
+                 <string>Exclude range</string>
+                </property>
+                <attribute name="buttonGroup">
+                 <string notr="true">include_date_uploaded_group</string>
+                </attribute>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_2">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="time_uploaded_box">
+           <property name="title">
+            <string>Uploaded: Time Range</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_9">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_10">
+              <item>
+               <widget class="QLabel" name="label_13">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>From:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="uploaded_time_range_min_btn">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>00:00</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QTimeEdit" name="uploaded_time_range_min_edit"/>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_14">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>To:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QTimeEdit" name="uploaded_time_range_max_edit"/>
+              </item>
+              <item>
+               <widget class="QPushButton" name="uploaded_time_range_max_btn">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>23:59</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_11">
+              <item>
+               <widget class="QRadioButton" name="uploaded_time_range_include_rb">
+                <property name="text">
+                 <string>Include range</string>
+                </property>
+                <attribute name="buttonGroup">
+                 <string notr="true">include_time_uploaded_group</string>
+                </attribute>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="uploaded_time_range_exclude_rb">
+                <property name="text">
+                 <string>Exclude range</string>
+                </property>
+                <attribute name="buttonGroup">
+                 <string notr="true">include_time_uploaded_group</string>
+                </attribute>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_4">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="days_of_month_uploaded_box">
+           <property name="title">
+            <string>Uploaded: Days of Month</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_7">
+            <item>
+             <widget class="QLineEdit" name="days_of_month_uploaded_edit">
+              <property name="placeholderText">
+               <string>comma-separated or range (e.g. 3, 5, 8-10, 12)</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="months_uploaded_box">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="title">
+            <string>Uploaded: Months</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
+            <item>
+             <widget class="QLineEdit" name="months_uploaded_edit">
+              <property name="placeholderText">
+               <string>comma-separated or range (e.g. 3, 5, 8-10, 12)</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="weekdays_uploaded_box">
+           <property name="title">
+            <string>Uploaded: Weekdays</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_8">
+            <item>
+             <widget class="QCheckBox" name="weekdays_uploaded_mon">
+              <property name="text">
+               <string>Mon</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="weekdays_uploaded_tue">
+              <property name="text">
+               <string>Tue</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="weekdays_uploaded_wed">
+              <property name="text">
+               <string>Wed</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="weekdays_uploaded_thu">
+              <property name="text">
+               <string>Thu</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="weekdays_uploaded_fri">
+              <property name="text">
+               <string>Fri</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="weekdays_uploaded_sat">
+              <property name="text">
+               <string>Sat</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="weekdays_uploaded_sun">
+              <property name="text">
+               <string>Sun</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Orientation::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>IntegerOnlyDoubleSpinBox</class>
+   <extends>QDoubleSpinBox</extends>
+   <header>ui.widgets.custom_widgets</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>date_watched_box</tabstop>
+  <tabstop>date_watched_set_oldest_btn</tabstop>
+  <tabstop>date_watched_from</tabstop>
+  <tabstop>date_watched_to</tabstop>
+  <tabstop>date_watched_set_newest_btn</tabstop>
+  <tabstop>date_watched_include_rb</tabstop>
+  <tabstop>date_watched_exclude_rb</tabstop>
+  <tabstop>time_watched_box</tabstop>
+  <tabstop>watched_time_range_min_btn</tabstop>
+  <tabstop>watched_time_range_min_edit</tabstop>
+  <tabstop>watched_time_range_max_edit</tabstop>
+  <tabstop>watched_time_range_max_btn</tabstop>
+  <tabstop>watched_time_range_include_rb</tabstop>
+  <tabstop>watched_time_range_exclude_rb</tabstop>
+  <tabstop>days_of_month_watched_box</tabstop>
+  <tabstop>days_of_month_watched_edit</tabstop>
+  <tabstop>months_watched_box</tabstop>
+  <tabstop>months_watched_edit</tabstop>
+  <tabstop>weekdays_watched_box</tabstop>
+  <tabstop>weekdays_watched_mon</tabstop>
+  <tabstop>weekdays_watched_tue</tabstop>
+  <tabstop>weekdays_watched_wed</tabstop>
+  <tabstop>weekdays_watched_thu</tabstop>
+  <tabstop>weekdays_watched_fri</tabstop>
+  <tabstop>weekdays_watched_sat</tabstop>
+  <tabstop>weekdays_watched_sun</tabstop>
+  <tabstop>date_uploaded_box</tabstop>
+  <tabstop>date_uploaded_set_oldest_btn</tabstop>
+  <tabstop>date_uploaded_from</tabstop>
+  <tabstop>date_uploaded_to</tabstop>
+  <tabstop>date_uploaded_set_newest_btn</tabstop>
+  <tabstop>date_uploaded_include_rb</tabstop>
+  <tabstop>date_uploaded_exclude_rb</tabstop>
+  <tabstop>time_uploaded_box</tabstop>
+  <tabstop>uploaded_time_range_min_btn</tabstop>
+  <tabstop>uploaded_time_range_min_edit</tabstop>
+  <tabstop>uploaded_time_range_max_edit</tabstop>
+  <tabstop>uploaded_time_range_max_btn</tabstop>
+  <tabstop>uploaded_time_range_include_rb</tabstop>
+  <tabstop>uploaded_time_range_exclude_rb</tabstop>
+  <tabstop>days_of_month_uploaded_box</tabstop>
+  <tabstop>days_of_month_uploaded_edit</tabstop>
+  <tabstop>months_uploaded_box</tabstop>
+  <tabstop>months_uploaded_edit</tabstop>
+  <tabstop>weekdays_uploaded_box</tabstop>
+  <tabstop>weekdays_uploaded_mon</tabstop>
+  <tabstop>weekdays_uploaded_tue</tabstop>
+  <tabstop>weekdays_uploaded_wed</tabstop>
+  <tabstop>weekdays_uploaded_thu</tabstop>
+  <tabstop>weekdays_uploaded_fri</tabstop>
+  <tabstop>weekdays_uploaded_sat</tabstop>
+  <tabstop>weekdays_uploaded_sun</tabstop>
+  <tabstop>title_cb</tabstop>
+  <tabstop>title_combo</tabstop>
+  <tabstop>title_regex_cb</tabstop>
+  <tabstop>title_edit</tabstop>
+  <tabstop>channel_cb</tabstop>
+  <tabstop>channel_combo</tabstop>
+  <tabstop>channel_regex_cb</tabstop>
+  <tabstop>channel_edit</tabstop>
+  <tabstop>views_cb</tabstop>
+  <tabstop>views_combo</tabstop>
+  <tabstop>views_min</tabstop>
+  <tabstop>views_max</tabstop>
+  <tabstop>userviews_cb</tabstop>
+  <tabstop>userviews_combo</tabstop>
+  <tabstop>userviews_min</tabstop>
+  <tabstop>userviews_max</tabstop>
+  <tabstop>userviews_channel_cb</tabstop>
+  <tabstop>userviews_channel_combo</tabstop>
+  <tabstop>userviews_channel_min</tabstop>
+  <tabstop>userviews_channel_max</tabstop>
+  <tabstop>languages_cb</tabstop>
+  <tabstop>languages_combo</tabstop>
+  <tabstop>languages_edit</tabstop>
+  <tabstop>duration_cb</tabstop>
+  <tabstop>duration_combo</tabstop>
+  <tabstop>duration_min</tabstop>
+  <tabstop>duration_max</tabstop>
+  <tabstop>youtube_rb</tabstop>
+  <tabstop>music_rb</tabstop>
+  <tabstop>platform_both_rb</tabstop>
+  <tabstop>available_rb</tabstop>
+  <tabstop>deleted_rb</tabstop>
+  <tabstop>availability_both_rb</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>Dialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>Dialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <buttongroups>
+  <buttongroup name="include_date_uploaded_group"/>
+  <buttongroup name="include_date_watched_group"/>
+  <buttongroup name="include_time_watched_group"/>
+  <buttongroup name="availability_group"/>
+  <buttongroup name="include_time_uploaded_group"/>
+  <buttongroup name="platform_group"/>
+ </buttongroups>
+</ui>
