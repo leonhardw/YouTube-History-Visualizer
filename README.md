@@ -9,7 +9,7 @@
 - [Run from source](#run-from-source)
 
 
-A desktop application written in Python with PySide6 to parse, analyze and visualize your personal YouTube watch history requested via [Google Takeout](https://takeout.google.com) as matplotlib charts.  
+A privacy-focused desktop application written in Python with PySide6 to parse, analyze and visualize your personal YouTube watch history requested via [Google Takeout](https://takeout.google.com) as matplotlib charts.  
 The application converts the HTML export into a local database file (serialized Python objects) for fast access and filtering.  
 All data except API requests (needs API key, disabled by default) is processed entirely locally.
 
