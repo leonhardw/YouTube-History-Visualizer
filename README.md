@@ -2,6 +2,7 @@
 
 # YouTube History Visualizer
 
+- [Screenshots](#screenshots)
 - [Quick Start](#quick-start)  
 - [Using filters](#using-filters)
 - [Additional metadata](#additional-metadata)
