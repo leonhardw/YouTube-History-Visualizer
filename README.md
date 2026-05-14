@@ -2,6 +2,7 @@
 
 - [Quick Start](#quick-start)  
 - [Using filters](#using-filters)
+- [Additional metadata](#additional-metadata)
 - [Run from source](#run-from-source)
 
 
