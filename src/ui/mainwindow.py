@@ -214,7 +214,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.set_plot_mode_enabled(False)
         else:
             self.set_plot_mode_enabled(True)
-            
+    
     def set_plot_year_range(self):
         if self.plot_settings_stack.currentWidget() == self.year_page:
             if self.plot_watched_rb.isChecked():
@@ -518,9 +518,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.selected_plot_group.button(2).setChecked(True)
         else:
             self.selected_plot_group.button(0).setChecked(True)
-            
+        
         self.set_plot_mode_enabled(False)
-            
+    
     def set_metadata_filters_enabled(self, state):
         self.filter_dialog.uploaded_filters_tab.setEnabled(state)
         

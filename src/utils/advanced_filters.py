@@ -63,7 +63,7 @@ def range_to_str(range_, to_time=False, no_format=False):
     min_, max_ = range_
     if to_time:
         min_str, max_str = secs_to_time(min_), secs_to_time(max_)
-        
+    
     elif no_format:
         min_str, max_str = min_, max_
     else:

@@ -76,7 +76,7 @@ class WatchHistoryParser:
                 wd_dict = {'link': elements[0], 'id': video_id, 'title': html.unescape(elements[1]), 'channel_link': elements[2],
                            'channel': html.unescape(elements[3]),
                            'time_watched': date_parser.parse_date(elements[4]), 'deleted': False, 'music': music}
-                
+            
             else:  # video is deleted
                 if only_total_count:
                     continue
