@@ -67,8 +67,39 @@ Result: Shows videos that are either long English videos OR popular music tracks
 
 ## Additional metadata
 To perform deeper analysis (e.g., filtering by upload date, total views, language or duration), you can integrate the YouTube API:
-This requires you to create an API key on https://console.cloud.google.com ([Instructions](https://github.com/code-charity/youtube/wiki/%F0%9F%9B%88-YouTube-API:--How-to-generate-your-Youtube-API-key))  
+This requires you to create an API key on [Google Cloud Console](https://console.cloud.google.com).  
 *Note: This is entirely optional. Basic history analysis works without it.*  
+
+### How to Get Your YouTube API Key
+*Every API key has a free limit of 10,000 tokens per day. Fetching metadata for 50 videos consumes 1 token.
+That means you can fetch metadata for 500,000 videos per day which should be more than enough.*  
+  
+Follow these steps to generate your own API key:
+
+#### 1. Create a Google Cloud Project
+   - Go to the Google Cloud Console.
+   - Sign in with a Google account.
+   - Click the Project Dropdown at the top left and select New Project.
+   - Give it a name (e.g., My-Metadata-App) and click Create.
+
+#### 2. Enable the YouTube API
+   - Make sure your new project is selected in the top bar.
+   - In the left sidebar, navigate to APIs & Services > Library.
+   - Search for "YouTube Data API v3".
+   - Click on the result and click the Enable button.
+
+#### 3. Generate Your Credentials
+   - Go to APIs & Services > Credentials in the sidebar.
+   - Click + Create Credentials at the top of the page.
+   - Select API Key.
+   - A pop-up will appear with your API key. Copy this string.
+
+#### 4. (Recommended) Restrict Your Key
+   - To ensure your key is only used for this purpose:
+   - Click Edit API Key (or the pencil icon) next to your key.
+   - Under API restrictions, select "Restrict key".
+   - Choose YouTube Data API v3 from the dropdown menu.
+   - Click Save.
 
 ## Run from source
 Requirements:
