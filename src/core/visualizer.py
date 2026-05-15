@@ -183,7 +183,7 @@ class WatchHistoryVisualizer:
     
     def visualize_time_per_year_heatmap(self, accuracy=30, rotate=0, absolute=True, mode=VIEW):
         df = self.get_time_per_year(accuracy, rotate, absolute, mode)
-        yticks_labels = [label.strftime('%X')[:5] if label.minute == label.second == 0 else '' for label in df.index]
+        yticks_labels = [label.strftime('%H:%M')[:5] if label.minute == label.second == 0 else '' for label in df.index]
         plt.figure(figsize=(14, 7))
         ax = sns.heatmap(df, annot=False, fmt='d', cmap='coolwarm', yticklabels=yticks_labels, cbar_kws={'pad': 0.1})
         
