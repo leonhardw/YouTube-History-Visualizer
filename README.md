@@ -19,7 +19,7 @@ All data except API requests (needs API key, disabled by default) is processed e
 - Multiple charts
 - Additional metadata from YouTube API (optional)
 
-If you find any bugs or have any feature requests, please create an issue [here](https://github.com/leonhardw/YouTube-History-Visualizer/issues).
+If you find any bugs or have any suggestions or feature requests, please create an issue [here](https://github.com/leonhardw/YouTube-History-Visualizer/issues).
 
 ## Screenshots
 <details>
