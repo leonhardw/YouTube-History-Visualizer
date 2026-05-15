@@ -65,7 +65,7 @@ def range_to_str(range_, to_time=False, no_format=False):
         min_str, max_str = secs_to_time(min_), secs_to_time(max_)
     
     elif no_format:
-        min_str, max_str = min_, max_
+        min_str, max_str = min_.strftime('%X'), max_.strftime('%X')
     else:
         min_str, max_str = f'{min_:n}', f'{max_:n}'
     if min_ == 0:

@@ -13,6 +13,7 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import locale
 import math
 from datetime import time, datetime
 from typing import Literal
@@ -33,6 +34,8 @@ from ui.widgets.custom_widgets import AnalysisCard
 from ui.widgets.extendedtableview import TableViewDialog
 from utils import export_data
 from utils.advanced_filters import filter_to_str, str_to_list
+
+locale.setlocale(locale.LC_ALL, '')
 
 
 class WorkerSignals(QObject):
@@ -67,19 +70,19 @@ class APICallWorker(QRunnable):
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
-    property_plots = ('Videos per views\n(Bar chart)',
-                      'Videos per duration\n(Bar chart)',
-                      'Videos per channel\n(Pie chart)',
+    property_plots = ('Views per video\n(Bar chart)',
+                      'Video durations\n(Bar chart)',
+                      'My most watched channels\n(Pie chart)',
                       'My most watched videos\n(Pie chart)',
-                      'Videos per language\n(Pie chart)')
+                      'Language breakdown\n(Pie chart)')
     
-    time_plots = ('Videos per day of month\n(Bar chart)',
-                  'Videos per month of year\n(Bar chart)',
-                  'Videos per year\n(Bar chart)',
-                  'Videos per weekday\n(Bar chart)',
-                  'Videos per day of year\n(Line chart)',
-                  'Videos per total months\n(Line chart)',
-                  'Videos per time of day\n(Bar chart)',
+    time_plots = ('Videos by day of month\n(Bar chart)',
+                  'Videos by month\n(Bar chart)',
+                  'Videos by year\n(Bar chart)',
+                  'Videos by weekday\n(Bar chart)',
+                  'Videos by day of year\n(Line chart)',
+                  'Monthly history\n(Line chart)',
+                  'Videos by time of day\n(Bar chart)',
                   'Time of day per year\n(Heatmap, absolute)',
                   'Time of day per year\n(Heatmap, percentages)'
                   )
@@ -100,7 +103,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     HEATMAP_ABS = 12
     HEATMAP_REL = 13
     
-    accuracies = {0: 5, 1: 10, 2: 15, 3: 20, 4: 30, 5: 60, 6: 120}
+    intervals = {0: 5, 1: 10, 2: 15, 3: 20, 4: 30, 5: 60}
     
     def __init__(self):
         super().__init__()
@@ -126,14 +129,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.selected_plot_group.idClicked.connect(self.update_plot_settings)
         self.update_plot_settings(0)
         
-        self.accuracy_combo_bars.currentIndexChanged.connect(lambda: self.set_timeedit_step_size('leftmost_time'))
-        self.accuracy_combo_heatmap.currentIndexChanged.connect(lambda: self.set_timeedit_step_size('topmost_time'))
-        self.set_timeedit_step_size('leftmost_time')
-        self.set_timeedit_step_size('topmost_time')
+        self.interval_combo.currentIndexChanged.connect(self.set_timeedit_step_size)
+        self.set_timeedit_step_size()
         
-        self.show_plot_btn.clicked.connect(lambda: self.handle_plot('show'))
-        self.save_plot_btn.clicked.connect(lambda: self.handle_plot('save'))
-        self.view_plot_as_table_btn.clicked.connect(self.view_plot_as_table)
+        self.generate_plot_btn.clicked.connect(lambda: self.handle_plot('show'))
+        self.export_plot_btn.clicked.connect(lambda: self.handle_plot('save'))
+        self.view_plot_data_as_table_btn.clicked.connect(self.view_plot_as_table)
         
         self.create_db_btn.clicked.connect(self.create_database)
         self.load_db_btn.clicked.connect(self.load_database)
@@ -153,29 +154,30 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionAbout.triggered.connect(self.show_about_dialog)
         
         self.threshold_spin.setValue(50)
-        self.accuracy_combo_bars.setCurrentIndex(4)
-        self.accuracy_combo_heatmap.setCurrentIndex(4)
-        self.show_plot_btn.setDefault(True)
+        self.interval_combo.setCurrentIndex(4)
+        self.generate_plot_btn.setDefault(True)
         self.plot_mode_group.idClicked.connect(lambda button_id: self.set_plot_year_range())
         
         self.set_data_buttons_enabled(False, data_loaded=False)
         self.add_filter_btn.setEnabled(False)
         self.edit_filter_btn.setEnabled(False)
         self.delete_filter_btn.setEnabled(False)
+        self.analysis_tab.setEnabled(False)
     
     def show_about_dialog(self):
         about_dialog = AboutDialog(self)
         about_dialog.exec()
     
     def set_data_buttons_enabled(self, state, data_loaded=True):
-        self.save_plot_btn.setEnabled(state)
-        self.show_plot_btn.setEnabled(state)
-        self.view_plot_as_table_btn.setEnabled(state)
+        self.export_plot_btn.setEnabled(state)
+        self.generate_plot_btn.setEnabled(state)
+        self.view_plot_data_as_table_btn.setEnabled(state)
         
         self.save_db_btn.setEnabled(state)
         self.export_as_csv_btn.setEnabled(state)
         self.view_as_table_btn.setEnabled(state)
         self.manage_db_btn.setEnabled(state)
+        self.analysis_tab.setEnabled(state)
     
     def set_data_buttons_state(self):
         if len(self.analyzer.watch_data) > 0:
@@ -187,7 +189,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         layout = self.analysis_tab.layout()
         self.analysis_tab.setUpdatesEnabled(False)
         self.plots_vbox = QVBoxLayout()
-        self.property_plots_box = QGroupBox('Property plots')
+        self.property_plots_box = QGroupBox('General plots')
         self.property_plots_box.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         self.property_plots_grid = QGridLayout()
         rb_id = 0
@@ -223,10 +225,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         elif current == self.PER_DAY_OF_YEAR:
             self.plot_settings_stack.setCurrentWidget(self.year_page)
             self.set_plot_year_range()
-        elif current == self.PER_TIME:
-            self.plot_settings_stack.setCurrentWidget(self.leftmost_time_page)
-        elif current in (self.HEATMAP_ABS, self.HEATMAP_REL):
-            self.plot_settings_stack.setCurrentWidget(self.topmost_time_page)
+        elif current in (self.HEATMAP_ABS, self.HEATMAP_REL, self.PER_TIME):
+            self.plot_settings_stack.setCurrentWidget(self.time_page)
         else:
             self.plot_settings_stack.setCurrentWidget(self.empty_page)
         
@@ -259,14 +259,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         
         if key == Qt.Key.Key_Return:
             if self.tabWidget.currentWidget() == self.analysis_tab:
-                if self.show_plot_btn.isEnabled():
+                if self.generate_plot_btn.isEnabled():
                     self.handle_plot('show')
     
-    def set_timeedit_step_size(self, widget: Literal['leftmost_time', 'topmost_time']):
-        if widget == 'leftmost_time':
-            self.leftmost_time_edit.change_step_size(self.accuracies[self.accuracy_combo_bars.currentIndex()])
-        elif widget == 'topmost_time':
-            self.topmost_time_edit.change_step_size(self.accuracies[self.accuracy_combo_heatmap.currentIndex()])
+    def set_timeedit_step_size(self):
+        self.start_time_edit.change_step_size(self.intervals[self.interval_combo.currentIndex()])
     
     # noinspection PyUnboundLocalVariable
     def handle_plot(self, plot_mode: Literal['show', 'save']):
@@ -324,20 +321,20 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             case self.PER_TOTAL_MONTH:
                 self.visualizer.visualize_all_months(mode=mode)
             case self.PER_TIME:
-                accuracy = self.accuracies[self.accuracy_combo_bars.currentIndex()]
-                leftmost_time = self.leftmost_time_edit.time()
-                minutes = leftmost_time.hour() * 60 + leftmost_time.minute()
-                self.visualizer.visualize_videos_per_time(accuracy=accuracy, rotate=minutes, mode=mode)
+                interval = self.intervals[self.interval_combo.currentIndex()]
+                start_time = self.start_time_edit.time()
+                minutes = start_time.hour() * 60 + start_time.minute()
+                self.visualizer.visualize_videos_per_time(accuracy=interval, rotate=minutes, mode=mode)
             case self.HEATMAP_ABS | self.HEATMAP_REL:
-                accuracy = self.accuracies[self.accuracy_combo_heatmap.currentIndex()]
-                topmost_time = self.topmost_time_edit.time()
-                minutes = topmost_time.hour() * 60 + topmost_time.minute()
+                interval = self.intervals[self.interval_combo.currentIndex()]
+                start_time = self.start_time_edit.time()
+                minutes = start_time.hour() * 60 + start_time.minute()
                 absolute = None
                 if selected_plot == self.HEATMAP_ABS:
                     absolute = True
                 elif selected_plot == self.HEATMAP_REL:
                     absolute = False
-                self.visualizer.visualize_time_per_year_heatmap(accuracy=accuracy, rotate=-minutes, absolute=absolute, mode=mode)
+                self.visualizer.visualize_time_per_year_heatmap(accuracy=interval, rotate=-minutes, absolute=absolute, mode=mode)
     
     # noinspection PyUnboundLocalVariable
     def view_plot_as_table(self):
@@ -397,27 +394,27 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 data[0] = [month.strftime('%Y-%m') for month in data[0]]
                 header_x = 'Month'
             case self.PER_TIME:
-                accuracy = self.accuracies[self.accuracy_combo_bars.currentIndex()]
-                leftmost_time = self.leftmost_time_edit.time()
-                minutes = leftmost_time.hour() * 60 + leftmost_time.minute()
-                data = self.visualizer.get_videos_per_time(accuracy=accuracy, rotate=minutes, mode=mode)
+                interval = self.intervals[self.interval_combo.currentIndex()]
+                start_time = self.start_time_edit.time()
+                minutes = start_time.hour() * 60 + start_time.minute()
+                data = self.visualizer.get_videos_per_time(accuracy=interval, rotate=minutes, mode=mode)
                 header_x = 'Time'
             case self.HEATMAP_ABS | self.HEATMAP_REL:
-                accuracy = self.accuracies[self.accuracy_combo_heatmap.currentIndex()]
-                topmost_time = self.topmost_time_edit.time()
-                minutes = topmost_time.hour() * 60 + topmost_time.minute()
+                interval = self.intervals[self.interval_combo.currentIndex()]
+                start_time = self.start_time_edit.time()
+                minutes = start_time.hour() * 60 + start_time.minute()
                 absolute = None
                 if selected_plot == self.HEATMAP_ABS:
                     absolute = True
                 elif selected_plot == self.HEATMAP_REL:
                     absolute = False
-                data = self.visualizer.get_time_per_year(accuracy=accuracy, rotate=-minutes, absolute=absolute, mode=mode, as_heatmap=False)
+                data = self.visualizer.get_time_per_year(accuracy=interval, rotate=-minutes, absolute=absolute, mode=mode, as_heatmap=False)
         
         data = list(data)
         if selected_plot in (self.HEATMAP_ABS, self.HEATMAP_REL):
             data[0] = ['Time'] + [str(i) for i in data[0]]
             for i in range(1, len(data)):
-                data[i][0] = data[i][0].strftime('%H:%M')
+                data[i][0] = data[i][0].strftime('%X')
             translated_data = data
         else:
             if selected_plot in (self.PER_DAY, self.PER_MONTH, self.PER_YEAR, self.PER_TIME):

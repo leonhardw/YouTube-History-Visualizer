@@ -29,7 +29,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(555, 461)
+        MainWindow.resize(478, 418)
         self.actionExit = QAction(MainWindow)
         self.actionExit.setObjectName(u"actionExit")
         self.actionAbout = QAction(MainWindow)
@@ -265,80 +265,42 @@ class Ui_MainWindow(object):
         self.verticalLayout_4.addWidget(self.label_2)
 
         self.plot_settings_stack.addWidget(self.empty_page)
-        self.leftmost_time_page = QWidget()
-        self.leftmost_time_page.setObjectName(u"leftmost_time_page")
-        self.horizontalLayout_6 = QHBoxLayout(self.leftmost_time_page)
+        self.time_page = QWidget()
+        self.time_page.setObjectName(u"time_page")
+        self.horizontalLayout_6 = QHBoxLayout(self.time_page)
         self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
         self.horizontalLayout_6.setContentsMargins(0, -1, -1, -1)
-        self.label_10 = QLabel(self.leftmost_time_page)
+        self.label_10 = QLabel(self.time_page)
         self.label_10.setObjectName(u"label_10")
 
         self.horizontalLayout_6.addWidget(self.label_10)
 
-        self.accuracy_combo_bars = QComboBox(self.leftmost_time_page)
-        self.accuracy_combo_bars.addItem("")
-        self.accuracy_combo_bars.addItem("")
-        self.accuracy_combo_bars.addItem("")
-        self.accuracy_combo_bars.addItem("")
-        self.accuracy_combo_bars.addItem("")
-        self.accuracy_combo_bars.addItem("")
-        self.accuracy_combo_bars.addItem("")
-        self.accuracy_combo_bars.setObjectName(u"accuracy_combo_bars")
+        self.interval_combo = QComboBox(self.time_page)
+        self.interval_combo.addItem("")
+        self.interval_combo.addItem("")
+        self.interval_combo.addItem("")
+        self.interval_combo.addItem("")
+        self.interval_combo.addItem("")
+        self.interval_combo.addItem("")
+        self.interval_combo.setObjectName(u"interval_combo")
 
-        self.horizontalLayout_6.addWidget(self.accuracy_combo_bars)
+        self.horizontalLayout_6.addWidget(self.interval_combo)
 
-        self.label_11 = QLabel(self.leftmost_time_page)
+        self.label_11 = QLabel(self.time_page)
         self.label_11.setObjectName(u"label_11")
 
         self.horizontalLayout_6.addWidget(self.label_11)
 
-        self.leftmost_time_edit = StepTimeEdit(self.leftmost_time_page)
-        self.leftmost_time_edit.setObjectName(u"leftmost_time_edit")
+        self.start_time_edit = StepTimeEdit(self.time_page)
+        self.start_time_edit.setObjectName(u"start_time_edit")
 
-        self.horizontalLayout_6.addWidget(self.leftmost_time_edit)
+        self.horizontalLayout_6.addWidget(self.start_time_edit)
 
         self.horizontalSpacer_5 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_6.addItem(self.horizontalSpacer_5)
 
-        self.plot_settings_stack.addWidget(self.leftmost_time_page)
-        self.topmost_time_page = QWidget()
-        self.topmost_time_page.setObjectName(u"topmost_time_page")
-        self.horizontalLayout_7 = QHBoxLayout(self.topmost_time_page)
-        self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
-        self.horizontalLayout_7.setContentsMargins(0, -1, -1, -1)
-        self.label_14 = QLabel(self.topmost_time_page)
-        self.label_14.setObjectName(u"label_14")
-
-        self.horizontalLayout_7.addWidget(self.label_14)
-
-        self.accuracy_combo_heatmap = QComboBox(self.topmost_time_page)
-        self.accuracy_combo_heatmap.addItem("")
-        self.accuracy_combo_heatmap.addItem("")
-        self.accuracy_combo_heatmap.addItem("")
-        self.accuracy_combo_heatmap.addItem("")
-        self.accuracy_combo_heatmap.addItem("")
-        self.accuracy_combo_heatmap.addItem("")
-        self.accuracy_combo_heatmap.addItem("")
-        self.accuracy_combo_heatmap.setObjectName(u"accuracy_combo_heatmap")
-
-        self.horizontalLayout_7.addWidget(self.accuracy_combo_heatmap)
-
-        self.label_12 = QLabel(self.topmost_time_page)
-        self.label_12.setObjectName(u"label_12")
-
-        self.horizontalLayout_7.addWidget(self.label_12)
-
-        self.topmost_time_edit = StepTimeEdit(self.topmost_time_page)
-        self.topmost_time_edit.setObjectName(u"topmost_time_edit")
-
-        self.horizontalLayout_7.addWidget(self.topmost_time_edit)
-
-        self.horizontalSpacer_6 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.horizontalLayout_7.addItem(self.horizontalSpacer_6)
-
-        self.plot_settings_stack.addWidget(self.topmost_time_page)
+        self.plot_settings_stack.addWidget(self.time_page)
 
         self.verticalLayout_6.addWidget(self.plot_settings_stack)
 
@@ -347,27 +309,27 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_5 = QHBoxLayout()
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
-        self.show_plot_btn = QPushButton(self.analysis_tab)
-        self.show_plot_btn.setObjectName(u"show_plot_btn")
+        self.generate_plot_btn = QPushButton(self.analysis_tab)
+        self.generate_plot_btn.setObjectName(u"generate_plot_btn")
         sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
         sizePolicy3.setHorizontalStretch(0)
         sizePolicy3.setVerticalStretch(0)
-        sizePolicy3.setHeightForWidth(self.show_plot_btn.sizePolicy().hasHeightForWidth())
-        self.show_plot_btn.setSizePolicy(sizePolicy3)
+        sizePolicy3.setHeightForWidth(self.generate_plot_btn.sizePolicy().hasHeightForWidth())
+        self.generate_plot_btn.setSizePolicy(sizePolicy3)
 
-        self.horizontalLayout_5.addWidget(self.show_plot_btn)
+        self.horizontalLayout_5.addWidget(self.generate_plot_btn)
 
-        self.save_plot_btn = QPushButton(self.analysis_tab)
-        self.save_plot_btn.setObjectName(u"save_plot_btn")
-        sizePolicy3.setHeightForWidth(self.save_plot_btn.sizePolicy().hasHeightForWidth())
-        self.save_plot_btn.setSizePolicy(sizePolicy3)
+        self.export_plot_btn = QPushButton(self.analysis_tab)
+        self.export_plot_btn.setObjectName(u"export_plot_btn")
+        sizePolicy3.setHeightForWidth(self.export_plot_btn.sizePolicy().hasHeightForWidth())
+        self.export_plot_btn.setSizePolicy(sizePolicy3)
 
-        self.horizontalLayout_5.addWidget(self.save_plot_btn)
+        self.horizontalLayout_5.addWidget(self.export_plot_btn)
 
-        self.view_plot_as_table_btn = QPushButton(self.analysis_tab)
-        self.view_plot_as_table_btn.setObjectName(u"view_plot_as_table_btn")
+        self.view_plot_data_as_table_btn = QPushButton(self.analysis_tab)
+        self.view_plot_data_as_table_btn.setObjectName(u"view_plot_data_as_table_btn")
 
-        self.horizontalLayout_5.addWidget(self.view_plot_as_table_btn)
+        self.horizontalLayout_5.addWidget(self.view_plot_data_as_table_btn)
 
 
         self.verticalLayout_3.addLayout(self.horizontalLayout_5)
@@ -379,7 +341,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 555, 33))
+        self.menubar.setGeometry(QRect(0, 0, 478, 33))
         self.menuFile = QMenu(self.menubar)
         self.menuFile.setObjectName(u"menuFile")
         self.menuHelp = QMenu(self.menubar)
@@ -402,7 +364,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
 
         self.tabWidget.setCurrentIndex(1)
-        self.plot_settings_stack.setCurrentIndex(0)
+        self.plot_settings_stack.setCurrentIndex(3)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -435,29 +397,18 @@ class Ui_MainWindow(object):
         self.exclude_other_cb.setText(QCoreApplication.translate("MainWindow", u"Exclude \"Other\"", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"Year:", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"No settings for selected plot available.", None))
-        self.label_10.setText(QCoreApplication.translate("MainWindow", u"Accuracy:", None))
-        self.accuracy_combo_bars.setItemText(0, QCoreApplication.translate("MainWindow", u"5 Minutes", None))
-        self.accuracy_combo_bars.setItemText(1, QCoreApplication.translate("MainWindow", u"10 Minutes", None))
-        self.accuracy_combo_bars.setItemText(2, QCoreApplication.translate("MainWindow", u"15 Minutes", None))
-        self.accuracy_combo_bars.setItemText(3, QCoreApplication.translate("MainWindow", u"20 Minutes", None))
-        self.accuracy_combo_bars.setItemText(4, QCoreApplication.translate("MainWindow", u"30 Minutes", None))
-        self.accuracy_combo_bars.setItemText(5, QCoreApplication.translate("MainWindow", u"60 Minutes", None))
-        self.accuracy_combo_bars.setItemText(6, QCoreApplication.translate("MainWindow", u"120 Minutes", None))
+        self.label_10.setText(QCoreApplication.translate("MainWindow", u"Interval:", None))
+        self.interval_combo.setItemText(0, QCoreApplication.translate("MainWindow", u"5 Minutes", None))
+        self.interval_combo.setItemText(1, QCoreApplication.translate("MainWindow", u"10 Minutes", None))
+        self.interval_combo.setItemText(2, QCoreApplication.translate("MainWindow", u"15 Minutes", None))
+        self.interval_combo.setItemText(3, QCoreApplication.translate("MainWindow", u"20 Minutes", None))
+        self.interval_combo.setItemText(4, QCoreApplication.translate("MainWindow", u"30 Minutes", None))
+        self.interval_combo.setItemText(5, QCoreApplication.translate("MainWindow", u"60 Minutes", None))
 
-        self.label_11.setText(QCoreApplication.translate("MainWindow", u"Leftmost time:", None))
-        self.label_14.setText(QCoreApplication.translate("MainWindow", u"Accuracy:", None))
-        self.accuracy_combo_heatmap.setItemText(0, QCoreApplication.translate("MainWindow", u"5 Minutes", None))
-        self.accuracy_combo_heatmap.setItemText(1, QCoreApplication.translate("MainWindow", u"10 Minutes", None))
-        self.accuracy_combo_heatmap.setItemText(2, QCoreApplication.translate("MainWindow", u"15 Minutes", None))
-        self.accuracy_combo_heatmap.setItemText(3, QCoreApplication.translate("MainWindow", u"20 Minutes", None))
-        self.accuracy_combo_heatmap.setItemText(4, QCoreApplication.translate("MainWindow", u"30 Minutes", None))
-        self.accuracy_combo_heatmap.setItemText(5, QCoreApplication.translate("MainWindow", u"60 Minutes", None))
-        self.accuracy_combo_heatmap.setItemText(6, QCoreApplication.translate("MainWindow", u"120 Minutes", None))
-
-        self.label_12.setText(QCoreApplication.translate("MainWindow", u"Topmost time:", None))
-        self.show_plot_btn.setText(QCoreApplication.translate("MainWindow", u"Show plot", None))
-        self.save_plot_btn.setText(QCoreApplication.translate("MainWindow", u"Save plot as...", None))
-        self.view_plot_as_table_btn.setText(QCoreApplication.translate("MainWindow", u"View plot as table", None))
+        self.label_11.setText(QCoreApplication.translate("MainWindow", u"Start time:", None))
+        self.generate_plot_btn.setText(QCoreApplication.translate("MainWindow", u"Generate plot", None))
+        self.export_plot_btn.setText(QCoreApplication.translate("MainWindow", u"Export plot as PNG", None))
+        self.view_plot_data_as_table_btn.setText(QCoreApplication.translate("MainWindow", u"View data as table", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.analysis_tab), QCoreApplication.translate("MainWindow", u"Analysis", None))
         self.menuFile.setTitle(QCoreApplication.translate("MainWindow", u"File", None))
         self.menuHelp.setTitle(QCoreApplication.translate("MainWindow", u"Help", None))
