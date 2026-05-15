@@ -247,11 +247,11 @@ class FastTableModel(QAbstractTableModel):
         if role == Qt.DisplayRole:
             data_to_display = self._data[index.row()][index.column()]
             if type(data_to_display) is datetime:
-                data_to_display = data_to_display.strftime('%Y-%m-%d %H:%M:%S')
+                data_to_display = data_to_display.strftime('%x %X')
             elif type(data_to_display) is date:
-                data_to_display = data_to_display.strftime('%Y-%m-%d')
+                data_to_display = data_to_display.strftime('%x')
             elif type(data_to_display) is time:
-                data_to_display = data_to_display.strftime('%H:%M:%S')
+                data_to_display = data_to_display.strftime('%X')
             elif type(data_to_display) is bool:
                 data_to_display = 'Yes' if data_to_display else 'No'
             elif isinstance(data_to_display, (int, float)):

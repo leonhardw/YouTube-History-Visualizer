@@ -15,6 +15,7 @@
 
 from datetime import datetime, timedelta
 from typing import Literal
+import locale
 
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
@@ -25,6 +26,8 @@ from dateutil.relativedelta import relativedelta
 
 from core.analyzer import UPLOAD, VIEW
 
+
+locale.setlocale(locale.LC_ALL, '')
 plt.rcParams['figure.figsize'] = [14.0, 7.0]
 
 
@@ -142,7 +145,7 @@ class WatchHistoryVisualizer:
     def get_videos_per_time(self, accuracy=30, rotate=0, mode=VIEW):
         rotate //= accuracy
         videos_per_time = self.watch_analyzer.get_videos_per_time(accuracy, True, mode=mode)
-        x = tuple(i.strftime('%H:%M') for i in videos_per_time.keys())
+        x = tuple(i.strftime('%X') for i in videos_per_time.keys())
         y = tuple(videos_per_time.values())
         
         pairs = list(zip(x, y))
@@ -180,11 +183,10 @@ class WatchHistoryVisualizer:
     
     def visualize_time_per_year_heatmap(self, accuracy=30, rotate=0, absolute=True, mode=VIEW):
         df = self.get_time_per_year(accuracy, rotate, absolute, mode)
-        yticks_labels = [str(label)[:5] if label.minute == label.second == 0 else '' for label in df.index]
+        yticks_labels = [label.strftime('%H:%M')[:5] if label.minute == label.second == 0 else '' for label in df.index]
         plt.figure(figsize=(14, 7))
         ax = sns.heatmap(df, annot=False, fmt='d', cmap='coolwarm', yticklabels=yticks_labels, cbar_kws={'pad': 0.1})
         
-        print(tuple(df.index))
         positions = [i for i, label in enumerate(df.index) if label.minute == label.second == 0]
         
         ax.hlines(positions, *ax.get_xlim(), colors='black', linewidth=.5)
@@ -366,8 +368,8 @@ class WatchHistoryVisualizer:
             date_range = self.watch_analyzer.upload_date_range
         else:
             date_range = self.watch_analyzer.date_range
-        start = date_range[0].strftime('%d.%m.%Y')
-        end = date_range[1].strftime('%d.%m.%Y')
+        start = date_range[0].date().strftime('%x')
+        end = date_range[1].date().strftime('%x')
         if mode is None:
             return f'{start} - {end}'
         else:
