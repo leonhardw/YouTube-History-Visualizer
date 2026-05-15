@@ -124,13 +124,10 @@ class WatchHistoryParser:
                 count += 1
         return count
     
-    def save_as_txt(self):
-        data = ''
-        for item in self.watch_data:
-            data += item['link'] + '\n'
-        
-        with open('watchhistory.txt', 'w') as f:
-            f.write(data)
+    def remove_topic_suffix(self):
+        for video in self.watch_data:
+            if video['music']:
+                video['channel'] = video['channel'].removesuffix(' - Topic')
     
     def save_watch_data(self, filename, remove_duplicates=True):
         export_data.save_watch_data(filename, self.watch_data, remove_duplicates, metadata_included=self.metadata_included)
@@ -149,8 +146,8 @@ class WatchHistoryParser:
         channel_occurences = defaultdict(int)
         for item in self.watch_data:
             total_occurences[item['link']] += 1
-            channel_occurences[item['channel']] += 1
+            channel_occurences[item['channel_link']] += 1
         
         for item in self.watch_data:
             item['total_occurences'] = total_occurences[item['link']]
-            item['channel_occurences'] = channel_occurences[item['channel']]
+            item['channel_occurences'] = channel_occurences[item['channel_link']]

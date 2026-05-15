@@ -26,6 +26,33 @@ from utils.export_data import save_as_csv
 
 locale.setlocale(locale.LC_ALL, '')
 
+from PySide6.QtCore import QSortFilterProxyModel  # Neu importieren
+
+
+# 1. Erstelle eine neue Klasse für die Filter-Logik
+class CustomFilterProxyModel(QSortFilterProxyModel):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self._filter_text = ""
+    
+    def setFilterText(self, text):
+        self._filter_text = text.lower()
+        self.invalidateFilter()  # Erzwingt Neu-Filterung
+    
+    def filterAcceptsRow(self, source_row, source_parent):
+        if not self._filter_text:
+            return True
+        
+        # Wir prüfen Spalte 3 und Spalte 5 (Index 2 und 4)
+        # Beachte: Index ist 0-basiert. Spalte 3 -> Index 2, Spalte 5 -> Index 4
+        model = self.sourceModel()
+        
+        # Hole Daten aus dem Quell-Modell
+        val_col3 = str(model.index(source_row, 2, source_parent).data()).lower()
+        val_col5 = str(model.index(source_row, 4, source_parent).data()).lower()
+        
+        return self._filter_text in val_col3 or self._filter_text in val_col5
+
 
 class ExtendedTableView(QTableView):
     def __init__(self, parent=None):
@@ -82,7 +109,7 @@ class TableViewDialog(QDialog):
         self.hbox = QHBoxLayout()
         
         self.ok_btn = QPushButton('OK')
-        self.export_as_csv_btn = QPushButton('Export as csv')
+        self.export_as_csv_btn = QPushButton('Export as CSV')
         
         self.ok_btn.clicked.connect(self.accept)
         self.export_as_csv_btn.clicked.connect(self.export_as_csv)
@@ -229,7 +256,7 @@ class FastTableModel(QAbstractTableModel):
                 data_to_display = 'Yes' if data_to_display else 'No'
             elif isinstance(data_to_display, (int, float)):
                 data_to_display = f'{data_to_display:n}'
-            return data_to_display
+            return str(data_to_display) if data_to_display is not None else 'None'
         
         return None
     

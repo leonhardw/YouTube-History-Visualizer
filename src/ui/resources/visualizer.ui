@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>577</width>
-    <height>476</height>
+    <width>555</width>
+    <height>461</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -270,7 +270,7 @@
               <enum>QFrame::Shape::NoFrame</enum>
              </property>
              <property name="currentIndex">
-              <number>4</number>
+              <number>0</number>
              </property>
              <widget class="QWidget" name="threshold_page">
               <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -288,6 +288,13 @@
                 <widget class="QSpinBox" name="threshold_spin">
                  <property name="maximum">
                   <number>999999</number>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="exclude_other_cb">
+                 <property name="text">
+                  <string>Exclude &quot;Other&quot;</string>
                  </property>
                 </widget>
                </item>
@@ -562,7 +569,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>577</width>
+     <width>555</width>
      <height>33</height>
     </rect>
    </property>

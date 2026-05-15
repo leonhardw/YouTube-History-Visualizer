@@ -46,7 +46,7 @@ class WatchHistoryVisualizer:
         else:
             plt.show()
     
-    def get_videos_per_channel(self, min_videos_per_channel=50):
+    def get_videos_per_channel(self, min_videos_per_channel=50, exclude_other=False):
         videos_per_channel = self.watch_analyzer.get_videos_per_channel()
         x = tuple(channel[0] for channel in videos_per_channel.keys())
         y = tuple(videos_per_channel.values())
@@ -63,15 +63,16 @@ class WatchHistoryVisualizer:
                 cleared_x.append(x[i])
                 cleared_y.append(y[i])
             else:
-                other_count += 1
+                other_count += count
         
-        cleared_x.append('Other')
-        cleared_y.append(other_count)
+        if not exclude_other or min_videos_per_channel > y[0]:
+            cleared_x.append('Other')
+            cleared_y.append(other_count)
         
         return cleared_x, cleared_y
     
-    def visualize_videos_per_channel(self, min_videos_per_channel=50):
-        x, y = self.get_videos_per_channel(min_videos_per_channel)
+    def visualize_videos_per_channel(self, min_videos_per_channel=50, exclude_other=False):
+        x, y = self.get_videos_per_channel(min_videos_per_channel, exclude_other)
         plt.figure()
         plt.pie(y, labels=x, autopct=lambda pct: absolute_values(pct, y),
                 pctdistance=0.8, labeldistance=1.025)
@@ -95,7 +96,7 @@ class WatchHistoryVisualizer:
                 cleared_x.append(x[i])
                 cleared_y.append(y[i])
             else:
-                other_count += 1
+                other_count += count
         
         if not exclude_other or min_views > y[0]:
             cleared_x.append('Other')
@@ -179,11 +180,12 @@ class WatchHistoryVisualizer:
     
     def visualize_time_per_year_heatmap(self, accuracy=30, rotate=0, absolute=True, mode=VIEW):
         df = self.get_time_per_year(accuracy, rotate, absolute, mode)
-        yticks_labels = [str(label)[:5] if i % (60 / accuracy) == 0 else '' for i, label in enumerate(df.index)]
+        yticks_labels = [str(label)[:5] if label.minute == label.second == 0 else '' for label in df.index]
         plt.figure(figsize=(14, 7))
         ax = sns.heatmap(df, annot=False, fmt='d', cmap='coolwarm', yticklabels=yticks_labels, cbar_kws={'pad': 0.1})
         
-        positions = [i for i, label in enumerate(df.index) if str(label).endswith(':00:00')]
+        print(tuple(df.index))
+        positions = [i for i, label in enumerate(df.index) if label.minute == label.second == 0]
         
         ax.hlines(positions, *ax.get_xlim(), colors='black', linewidth=.5)
         

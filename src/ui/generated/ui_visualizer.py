@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'visualizer.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.11.0
+## Created by: Qt User Interface Compiler version 6.11.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -16,12 +16,12 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QIcon, QImage, QKeySequence, QLinearGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
-from PySide6.QtWidgets import (QApplication, QButtonGroup, QComboBox, QFrame,
-    QGroupBox, QHBoxLayout, QLabel, QLayout,
-    QListWidget, QListWidgetItem, QMainWindow, QMenu,
-    QMenuBar, QPushButton, QRadioButton, QSizePolicy,
-    QSpacerItem, QSpinBox, QStackedWidget, QStatusBar,
-    QTabWidget, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QButtonGroup, QCheckBox, QComboBox,
+    QFrame, QGroupBox, QHBoxLayout, QLabel,
+    QLayout, QListWidget, QListWidgetItem, QMainWindow,
+    QMenu, QMenuBar, QPushButton, QRadioButton,
+    QSizePolicy, QSpacerItem, QSpinBox, QStackedWidget,
+    QStatusBar, QTabWidget, QVBoxLayout, QWidget)
 
 from ui.widgets.custom_widgets import StepTimeEdit
 
@@ -29,7 +29,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(577, 476)
+        MainWindow.resize(555, 461)
         self.actionExit = QAction(MainWindow)
         self.actionExit.setObjectName(u"actionExit")
         self.actionAbout = QAction(MainWindow)
@@ -222,6 +222,11 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_4.addWidget(self.threshold_spin)
 
+        self.exclude_other_cb = QCheckBox(self.threshold_page)
+        self.exclude_other_cb.setObjectName(u"exclude_other_cb")
+
+        self.horizontalLayout_4.addWidget(self.exclude_other_cb)
+
         self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_4.addItem(self.horizontalSpacer)
@@ -374,7 +379,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 577, 33))
+        self.menubar.setGeometry(QRect(0, 0, 555, 33))
         self.menuFile = QMenu(self.menubar)
         self.menuFile.setObjectName(u"menuFile")
         self.menuHelp = QMenu(self.menubar)
@@ -397,7 +402,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
 
         self.tabWidget.setCurrentIndex(1)
-        self.plot_settings_stack.setCurrentIndex(4)
+        self.plot_settings_stack.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -427,6 +432,7 @@ class Ui_MainWindow(object):
         self.plot_watched_rb.setText(QCoreApplication.translate("MainWindow", u"Watched", None))
         self.plot_uploaded_rb.setText(QCoreApplication.translate("MainWindow", u"Uploaded", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"Threshold for \"Other\":", None))
+        self.exclude_other_cb.setText(QCoreApplication.translate("MainWindow", u"Exclude \"Other\"", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"Year:", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"No settings for selected plot available.", None))
         self.label_10.setText(QCoreApplication.translate("MainWindow", u"Accuracy:", None))
