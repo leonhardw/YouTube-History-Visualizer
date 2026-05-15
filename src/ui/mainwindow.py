@@ -70,6 +70,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     property_plots = ('Videos per views\n(Bar chart)',
                       'Videos per duration\n(Bar chart)',
                       'Videos per channel\n(Pie chart)',
+                      'My most watched videos\n(Pie chart)',
                       'Videos per language\n(Pie chart)')
     
     time_plots = ('Videos per day of month\n(Bar chart)',
@@ -135,6 +136,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionExit.triggered.connect(self.close)
         self.actionAbout.triggered.connect(self.show_about_dialog)
         
+        self.threshold_spin.setValue(50)
         self.show_plot_btn.setDefault(True)
         self.plot_mode_group.idClicked.connect(lambda button_id: self.set_plot_year_range())
         
@@ -198,19 +200,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def update_plot_settings(self, rb_id):
         current = rb_id
-        if current in (2, 3):
+        if current in (2, 3, 4):
             self.plot_settings_stack.setCurrentWidget(self.threshold_page)
-        elif current == 8:
+        elif current == 9:
             self.plot_settings_stack.setCurrentWidget(self.year_page)
             self.set_plot_year_range()
-        elif current == 10:
+        elif current == 11:
             self.plot_settings_stack.setCurrentWidget(self.leftmost_time_page)
-        elif current in (11, 12):
+        elif current in (12, 13):
             self.plot_settings_stack.setCurrentWidget(self.topmost_time_page)
         else:
             self.plot_settings_stack.setCurrentWidget(self.empty_page)
         
-        if current <= 3:
+        if current <= 4:
             self.set_plot_mode_enabled(False)
         else:
             self.set_plot_mode_enabled(True)
@@ -260,7 +262,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 return
         else:
             self.visualizer.save_plots = False
-        if selected_plot >= 4:
+        if selected_plot >= 5:
             mode = VIEW if self.plot_watched_rb.isChecked() else UPLOAD
         match selected_plot:
             case 0:
@@ -270,33 +272,35 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             case 2:
                 self.visualizer.visualize_videos_per_channel(min_videos_per_channel=self.threshold_spin.value())
             case 3:
-                self.visualizer.visualize_videos_per_language(min_videos_per_language=self.threshold_spin.value())
+                self.visualizer.visualize_most_watched_videos(min_views=self.threshold_spin.value(), exclude_other=True)
             case 4:
-                self.visualizer.visualize_videos_per_date_unit('day', mode=mode)
+                self.visualizer.visualize_videos_per_language(min_videos_per_language=self.threshold_spin.value())
             case 5:
-                self.visualizer.visualize_videos_per_date_unit('month', mode=mode)
+                self.visualizer.visualize_videos_per_date_unit('day', mode=mode)
             case 6:
-                self.visualizer.visualize_videos_per_date_unit('year', mode=mode)
+                self.visualizer.visualize_videos_per_date_unit('month', mode=mode)
             case 7:
-                self.visualizer.visualize_videos_per_date_unit('weekday', mode=mode)
+                self.visualizer.visualize_videos_per_date_unit('year', mode=mode)
             case 8:
+                self.visualizer.visualize_videos_per_date_unit('weekday', mode=mode)
+            case 9:
                 year = self.year_spin.value()
                 self.visualizer.visualize_days_per_year(year=year, mode=mode)
-            case 9:
-                self.visualizer.visualize_all_months(mode=mode)
             case 10:
+                self.visualizer.visualize_all_months(mode=mode)
+            case 11:
                 accuracy = self.accuracies[self.accuracy_combo_bars.currentIndex()]
                 leftmost_time = self.leftmost_time_edit.time()
                 minutes = leftmost_time.hour() * 60 + leftmost_time.minute()
                 self.visualizer.visualize_videos_per_time(accuracy=accuracy, rotate=minutes, mode=mode)
-            case 11 | 12:
+            case 12 | 13:
                 accuracy = self.accuracies[self.accuracy_combo_heatmap.currentIndex()]
                 topmost_time = self.topmost_time_edit.time()
                 minutes = topmost_time.hour() * 60 + topmost_time.minute()
                 absolute = None
-                if selected_plot == 11:
+                if selected_plot == 12:
                     absolute = True
-                elif selected_plot == 12:
+                elif selected_plot == 13:
                     absolute = False
                 self.visualizer.visualize_time_per_year_heatmap(accuracy=accuracy, rotate=-minutes, absolute=absolute, mode=mode)
     
@@ -323,60 +327,65 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 sort_ascending = False
                 header_x = 'Channel'
             case 3:
+                data = self.visualizer.get_most_watched_videos(min_views=self.threshold_spin.value())
+                sort_by = 2  # (number, video, own views)
+                sort_ascending = False
+                header_x = 'Most Watched Videos'
+            case 4:
                 data = self.visualizer.get_videos_per_language(min_videos_per_language=self.threshold_spin.value())
                 sort_by = 2  # (number, language, views)
                 sort_ascending = False
                 header_x = 'Language'
-            case 4:
+            case 5:
                 data = self.visualizer.get_videos_per_date_unit('day', mode=mode)
                 header_x = 'Day'
-            case 5:
+            case 6:
                 data = self.visualizer.get_videos_per_date_unit('month', mode=mode)
                 header_x = 'Month'
-            case 6:
+            case 7:
                 data = self.visualizer.get_videos_per_date_unit('year', mode=mode)
                 data = list(data)
                 data[0] = [str(year) for year in data[0]]
                 header_x = 'Year'
-            case 7:
+            case 8:
                 data = self.visualizer.get_videos_per_date_unit('weekday', mode=mode)
                 header_x = 'Weekday'
-            case 8:
+            case 9:
                 year = self.year_spin.value()
                 data = self.visualizer.get_days_per_year(year=year, mode=mode)
                 data = list(data)
                 data[0] = [day.strftime('%Y-%m-%d') for day in data[0]]
                 header_x = 'Day of year'
-            case 9:
+            case 10:
                 data = self.visualizer.get_all_months(mode=mode)
                 data = list(data)
                 data[0] = [month.strftime('%Y-%m') for month in data[0]]
                 header_x = 'Month'
-            case 10:
+            case 11:
                 accuracy = self.accuracies[self.accuracy_combo_bars.currentIndex()]
                 leftmost_time = self.leftmost_time_edit.time()
                 minutes = leftmost_time.hour() * 60 + leftmost_time.minute()
                 data = self.visualizer.get_videos_per_time(accuracy=accuracy, rotate=minutes, mode=mode)
                 header_x = 'Time'
-            case 11 | 12:
+            case 12 | 13:
                 accuracy = self.accuracies[self.accuracy_combo_heatmap.currentIndex()]
                 topmost_time = self.topmost_time_edit.time()
                 minutes = topmost_time.hour() * 60 + topmost_time.minute()
                 absolute = None
-                if selected_plot == 11:
+                if selected_plot == 12:
                     absolute = True
-                elif selected_plot == 12:
+                elif selected_plot == 13:
                     absolute = False
                 data = self.visualizer.get_time_per_year(accuracy=accuracy, rotate=-minutes, absolute=absolute, mode=mode, as_heatmap=False)
         
         data = list(data)
-        if selected_plot in (11, 12):
+        if selected_plot in (12, 13):
             data[0] = ['Time'] + [str(i) for i in data[0]]
             for i in range(1, len(data)):
                 data[i][0] = data[i][0].strftime('%H:%M')
             translated_data = data
         else:
-            if selected_plot in (4, 5, 6, 10):
+            if selected_plot in (5, 6, 7, 11):
                 translated_data = list(zip(*data))
                 translated_data.insert(0, (header_x, header_y))
             else:
@@ -508,7 +517,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def set_metadata_plots_enabled(self, state):
         layout = self.property_plots_grid
-        buttons = ((0, 0), (0, 1), (0, 3))
+        buttons = ((0, 0), (0, 1), (0, 4))
         for row, col in buttons:
             layout.itemAtPosition(row, col).widget().setEnabled(state)
         

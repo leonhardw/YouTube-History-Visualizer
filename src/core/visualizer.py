@@ -78,6 +78,39 @@ class WatchHistoryVisualizer:
         plt.title(self.get_chart_title())
         self.handle_chart('channels.png')
     
+    def get_most_watched_videos(self, min_views=100, exclude_other=False):
+        most_watched_videos = self.watch_analyzer.get_most_watched_videos()
+        x = tuple(video[0] for video in most_watched_videos.keys())
+        y = tuple(most_watched_videos.values())
+        pairs = list(zip(x, y))
+        pairs.sort(key=lambda x: x[1], reverse=True)
+        x, y = zip(*pairs)
+        
+        cleared_x = []
+        cleared_y = []
+        
+        other_count = 0
+        for i, count in enumerate(y):
+            if count > min_views:
+                cleared_x.append(x[i])
+                cleared_y.append(y[i])
+            else:
+                other_count += 1
+        
+        if not exclude_other or min_views > y[0]:
+            cleared_x.append('Other')
+            cleared_y.append(other_count)
+        
+        return cleared_x, cleared_y
+    
+    def visualize_most_watched_videos(self, min_views=100, exclude_other=False):
+        x, y = self.get_most_watched_videos(min_views, exclude_other)
+        plt.figure()
+        plt.pie(y, labels=x, autopct=lambda pct: absolute_values(pct, y),
+                pctdistance=0.8, labeldistance=1.025)
+        plt.title(self.get_chart_title())
+        self.handle_chart('own_views.png')
+    
     def get_videos_per_date_unit(self, unit: Literal['year', 'month', 'day', 'weekday'], mode=VIEW):
         match unit:
             case 'year':

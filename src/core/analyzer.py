@@ -99,6 +99,15 @@ class WatchHistoryAnalyzer:
         
         return dict(videos_per_channel)
     
+    def get_most_watched_videos(self):
+        most_watched_videos = {}
+        for video in self.watch_data:
+            video_tuple = (video['title'], video['id'])
+            if most_watched_videos.get(video_tuple) is None:
+                most_watched_videos[video_tuple] = video['total_occurences']
+                
+        return most_watched_videos
+    
     def get_videos_per_year(self, mode=VIEW, include_unused=True):
         videos_per_year = defaultdict(int)
         if include_unused:
