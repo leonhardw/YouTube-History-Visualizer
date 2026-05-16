@@ -144,7 +144,7 @@ Python 3.12 (other versions may work too)
 
 1. Download or clone the repository using the green `Code` button or by running
 ```bash
-git clone https://github.com/YOUR_USERNAME/YouTube-History-Visualizer.git
+git clone https://github.com/leonhardw/YouTube-History-Visualizer.git
 ```
 2. Set up your environment
 ```bash
