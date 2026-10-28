@@ -35,13 +35,14 @@ If you find any bugs or have any suggestions or feature requests, please create 
 <img width="40%" alt="Property filters" src="https://github.com/leonhardw/YouTube-History-Visualizer/blob/main/images/filters2.png" /> <img width="40%" alt="Watched filters" src="https://github.com/leonhardw/YouTube-History-Visualizer/blob/main/images/filters3.png" /> <img width="40%" alt="Uploaded filters" src="https://github.com/leonhardw/YouTube-History-Visualizer/blob/main/images/filters4.png" />
 
 ### Possible plots
-<img width="40%" alt="Watched filters" src="https://github.com/leonhardw/YouTube-History-Visualizer/blob/main/images/plots.png" />
+<img width="40%" alt="Watched filters" src="https://github.com/leonhardw/YouTube-History-Visualizer/blob/main/images/all_plots.png" />
 
 ### Example plots
 Time of day  
-<img alt="Watched filters" src="https://github.com/leonhardw/YouTube-History-Visualizer/blob/main/images/plot.png" />
-Views  
 <img alt="Watched filters" src="https://github.com/leonhardw/YouTube-History-Visualizer/blob/main/images/plot2.png" />
+
+Total views  
+<img alt="Watched filters" src="https://github.com/leonhardw/YouTube-History-Visualizer/blob/main/images/plot.png" />
 
 </details>
 
