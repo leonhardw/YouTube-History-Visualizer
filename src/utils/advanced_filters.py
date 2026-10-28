@@ -132,6 +132,8 @@ def filter_to_str(filter_, view_date_range=None, upload_date_range=None):
                     filter_strs.append(f'My views per channel: {include}{range_to_str(value['range'])}')
                 case 'duration':
                     filter_strs.append(f'Duration: {include}{range_to_str(value['range'], to_time=True)}')
+                case 'upload_view_time_period':
+                    filter_strs.append(f'Hours from upload to first view: {include}{range_to_str(value['range'])}')
                 
                 # ---------- Watched time filters ---------- #
                 case 'date_watched':
@@ -294,6 +296,19 @@ def process_filter(watch_data, filters):
                     if not include:
                         filters_to_check[-1] = not filters_to_check[-1]
                 
+                case 'upload_view_time_period':
+                    min_, max_ = value['range']
+                    upload_date = item['upload_date']
+                    if upload_date is not None:
+                        time_period = (item['time_watched'] - upload_date).total_seconds() / 3600
+                        allow_negative = value['allow_negative']
+                        filters_to_check.append(check_in_range(min_, max_, time_period, allow_negative=allow_negative))
+                    else:
+                        filters_to_check.append(False)
+                    
+                    if not include:
+                        filters_to_check[-1] = not filters_to_check[-1]
+                
                 case 'platform':
                     # ignore 'include' for now
                     if value['youtube']:
@@ -413,7 +428,7 @@ def process_filter(watch_data, filters):
     return matching_items
 
 
-def check_in_range(min_, max_, value):
+def check_in_range(min_, max_, value, allow_negative=True):
     if value is None:
         return False
     if min_ > 0:
@@ -422,7 +437,10 @@ def check_in_range(min_, max_, value):
         else:
             return min_ <= value
     else:
-        return value <= max_
+        if allow_negative:
+            return value <= max_
+        else:
+            return 0 <= value <= max_
 
 
 def check_in_date_range(min_, max_, value, only_time=False):

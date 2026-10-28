@@ -23,7 +23,7 @@ import numpy as np
 
 from utils import date_parser
 from utils import export_data
-from utils.advanced_filters import advanced_filters, int_to_weekdays
+from utils.advanced_filters import advanced_filters, int_to_weekdays, remove_duplicates
 
 VIEW = 'time_watched'
 UPLOAD = 'upload_date'
@@ -108,7 +108,7 @@ class WatchHistoryAnalyzer:
             else:
                 if most_watched_videos[video_tuple] != video['total_occurences']:
                     print(video_tuple, most_watched_videos[video_tuple], video['total_occurences'], video['channel'])
-
+        
         return most_watched_videos
     
     def get_videos_per_year(self, mode=VIEW, include_unused=True):
@@ -292,10 +292,10 @@ class WatchHistoryAnalyzer:
         return dict(views_per_video), suffixes_dict
     
     def get_videos_per_duration(self, steps=(0, 10, 30, 60, 120, 300, 600, 1800, 3600, 7200), include_unused=False):
+        # steps in seconds (0s, 10s, 30s, 0:01h, 0:02h, 0:05h, 0:10h, 0:30h, 1:00h, 2:00h)
         videos_per_duration = defaultdict(int)
         
         if include_unused:
-            max_duration = self._get_longest_video()
             for step in steps:
                 videos_per_duration[step] = 0
             videos_per_duration['Unknown'] = 0
@@ -318,6 +318,50 @@ class WatchHistoryAnalyzer:
             formatted_durations[i] = date_parser.format_seconds(i)
         
         return dict(videos_per_duration), formatted_durations
+    
+    def get_upload_to_view_delta(self, steps=(0, 1, 3, 6, 12, 24, 48, 96, 168, 336, 720), include_unused=False):
+        # steps in hours (0h, 1h, 3h, 6h, 12h, 1d, 2d, 4d, 7d, 14d, 30d)
+        videos_per_time_period = defaultdict(int)
+        
+        if include_unused:
+            for step in steps:
+                videos_per_time_period[step] = 0
+            videos_per_time_period['Unknown'] = 0
+            videos_per_time_period['Live'] = 0
+            videos_per_time_period['Unlisted'] = 0
+        
+        filtered_watch_data = remove_duplicates(self.watch_data, keep='oldest')
+        
+        for video in filtered_watch_data:
+            upload_date = video['upload_date']
+            if upload_date is None:
+                videos_per_time_period['Unknown'] += 1
+            else:
+                time_period = (video['time_watched'] - upload_date).total_seconds() // 3600
+                if time_period < 0:
+                    if -24 < time_period < 0 and video['duration_sec'] > 1800:
+                        # If view is less than 24 hours before upload and at least 30 minutes long, assume it's a livestream.
+                        # (YouTube sets the upload date of livestreams to the moment where the stream ended)
+                        videos_per_time_period['Live'] += 1
+                    else:
+                        # Private or unlisted videos that were relased after user viewed them
+                        videos_per_time_period['Unlisted'] += 1
+                else:
+                    for step in steps[::-1]:
+                        if time_period >= step:
+                            time_period = step
+                            break
+                    videos_per_time_period[time_period] += 1
+        
+        formatted_time_periods = {}
+        for i in videos_per_time_period.keys():
+            if i in ('Unknown', 'Live', 'Unlisted'):
+                continue
+            formatted_time_periods[i] = date_parser.format_hours(i)
+        
+        print(videos_per_time_period, formatted_time_periods)
+        return dict(videos_per_time_period), formatted_time_periods
+        
     
     def set_date_range(self, start=None, end=None, mode=VIEW):
         if start:
