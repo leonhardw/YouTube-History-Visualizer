@@ -361,7 +361,6 @@ class WatchHistoryAnalyzer:
             formatted_time_periods[i] = date_parser.format_hours(i)
         
         return dict(videos_per_time_period), formatted_time_periods
-        
     
     def set_date_range(self, start=None, end=None, mode=VIEW):
         if start:
