@@ -310,6 +310,40 @@ class WatchHistoryVisualizer:
         plt.title(self.get_chart_title())
         self.handle_chart('durations.png')
     
+    def get_upload_to_view_delta(self):
+        videos_per_time_period, formatted_time_periods = self.watch_analyzer.get_upload_to_view_delta((0, 1, 3, 6, 12, 24, 48, 96, 168, 336, 720), True)
+        text_labels = {}
+        for label in ('Unknown', 'Live', 'Unlisted'):
+            text_labels[label] = videos_per_time_period[label]
+            del videos_per_time_period[label]
+
+        x = tuple(videos_per_time_period.keys())
+        y = tuple(videos_per_time_period.values())
+        
+        pairs = list(zip(x, y))
+        pairs.sort(key=lambda x: x[0])
+        x, y = zip(*pairs)
+        x, y = list(x), list(y)
+        x_as_time = []
+        for time_period_count in x:
+            x_as_time.append(formatted_time_periods.get(time_period_count, None))
+        
+        for text, count in text_labels.items():
+            x_as_time.append(text)
+            y.append(count)
+        
+        return x_as_time, y
+    
+    def visualize_upload_to_view_delta(self):
+        x, y = self.get_upload_to_view_delta()
+        
+        plt.figure()
+        bars = plt.bar(x, y)
+        plt.gca().bar_label(bars, padding=3)
+        # plt.xticks(rotation=90)
+        plt.title(self.get_chart_title())
+        self.handle_chart('time_periods.png')
+    
     def get_all_months(self, mode=VIEW):
         all_months = self.watch_analyzer.get_all_months(mode=mode)
         if mode == VIEW:

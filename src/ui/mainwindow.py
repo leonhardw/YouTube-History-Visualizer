@@ -83,6 +83,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                   'Videos by day of year\n(Line chart)',
                   'Monthly history\n(Line chart)',
                   'Videos by time of day\n(Bar chart)',
+                  'Time from upload to first view\n(Bar chart)',
                   'Time of day per year\n(Heatmap, absolute)',
                   'Time of day per year\n(Heatmap, percentages)'
                   )
@@ -100,8 +101,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     PER_DAY_OF_YEAR = 9
     PER_TOTAL_MONTH = 10
     PER_TIME = 11
-    HEATMAP_ABS = 12
-    HEATMAP_REL = 13
+    UPLOAD_VIEW_DELTA = 12
+    HEATMAP_ABS = 13
+    HEATMAP_REL = 14
     
     intervals = {0: 5, 1: 10, 2: 15, 3: 20, 4: 30, 5: 60}
     
@@ -234,7 +236,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         else:
             self.plot_settings_stack.setCurrentWidget(self.empty_page)
         
-        if current <= len(self.property_plots) - 1:
+        if current <= len(self.property_plots) - 1 or current == 12:
             self.set_plot_mode_enabled(False)
         else:
             self.set_plot_mode_enabled(True)
@@ -288,6 +290,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.visualizer.visualize_videos_per_views()
             case self.PER_DURATION:
                 self.visualizer.visualize_videos_per_duration()
+            case self.UPLOAD_VIEW_DELTA:
+                self.visualizer.visualize_upload_to_view_delta()
             case self.PER_CHANNEL | self.MOST_WATCHED:
                 threshold = self.threshold_spin.value()
                 proceed = True
@@ -403,6 +407,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 minutes = start_time.hour() * 60 + start_time.minute()
                 data = self.visualizer.get_videos_per_time(accuracy=interval, rotate=minutes, mode=mode)
                 header_x = 'Time'
+            case self.UPLOAD_VIEW_DELTA:
+                data = self.visualizer.get_upload_to_view_delta()
+                header_x = 'Views'
             case self.HEATMAP_ABS | self.HEATMAP_REL:
                 interval = self.intervals[self.interval_combo.currentIndex()]
                 start_time = self.start_time_edit.time()
@@ -543,7 +550,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def add_default_filter(self):
         self.filters.clear()
         self.filters_list.clear()
-        self.filters.append(self.default_filters)
+        self.filters.append(self.default_filters.copy())
         self.filters_list.addItem(filter_to_str(self.filters[-1]))
         self.filters_list.setCurrentRow(self.filters_list.count() - 1)
         self.delete_filter_btn.setEnabled(False)
@@ -566,7 +573,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def set_metadata_filters_enabled(self, state):
         self.filter_dialog.uploaded_filters_tab.setEnabled(state)
         
-        for cb in (self.filter_dialog.views_cb, self.filter_dialog.languages_cb, self.filter_dialog.duration_cb):
+        for cb in (self.filter_dialog.views_cb, self.filter_dialog.languages_cb, self.filter_dialog.duration_cb,
+                   self.filter_dialog.upload_view_time_cb, self.filter_dialog.allow_negative_time_cb):
             cb.setEnabled(state)
 
 
@@ -757,7 +765,7 @@ class FilterDialog(QDialog, Ui_Dialog):
         self.watched_time_range_max_btn.clicked.connect(lambda: self.watched_time_range_max_edit.setTime(QTime(23, 59, 59)))
         
         self.property_checkboxes = (self.title_cb, self.channel_cb, self.views_cb, self.userviews_cb,
-                                    self.userviews_channel_cb, self.languages_cb, self.duration_cb)
+                                    self.userviews_channel_cb, self.languages_cb, self.duration_cb, self.upload_view_time_cb)
         self.weekdays_watched_checkboxes = (self.weekdays_watched_mon, self.weekdays_watched_tue, self.weekdays_watched_wed,
                                             self.weekdays_watched_thu, self.weekdays_watched_fri, self.weekdays_watched_sat, self.weekdays_watched_sun)
         self.weekdays_uploaded_checkboxes = (self.weekdays_uploaded_mon, self.weekdays_uploaded_tue, self.weekdays_uploaded_wed,
@@ -832,6 +840,14 @@ class FilterDialog(QDialog, Ui_Dialog):
         else:
             self.delete_filter('duration')
         
+        if self.upload_view_time_cb.isChecked():
+            include = True if self.upload_view_time_combo.currentIndex() == 0 else False
+            self.filter_data['upload_view_time_period'] = {'include': include,
+                                                           'range': (self.upload_view_time_min.value(), self.upload_view_time_max.value()),
+                                                           'allow_negative': self.allow_negative_time_cb.isChecked()}
+        else:
+            self.delete_filter('upload_view_time_period')
+        
         yt_checked = self.youtube_rb.isChecked() or self.platform_both_rb.isChecked()
         yt_music_checked = self.music_rb.isChecked() or self.platform_both_rb.isChecked()
         self.filter_data['platform'] = {'include': True, 'youtube': yt_checked, 'music': yt_music_checked}
@@ -853,7 +869,6 @@ class FilterDialog(QDialog, Ui_Dialog):
                 duplicates = 'all'
         
         self.filter_data['duplicates'] = {'include': True, 'mode': duplicates}
-        
         
         # ---------- Watched time filters ---------- #
         if self.date_watched_box.isChecked():
@@ -990,6 +1005,12 @@ class FilterDialog(QDialog, Ui_Dialog):
                     self.duration_combo.setCurrentIndex(not include)
                     self.duration_min.setTime(QTime.fromMSecsSinceStartOfDay(value['range'][0] * 1000))
                     self.duration_max.setTime(QTime.fromMSecsSinceStartOfDay(value['range'][1] * 1000))
+                case 'upload_view_time_period':
+                    self.upload_view_time_cb.setChecked(True)
+                    self.upload_view_time_combo.setCurrentIndex(not include)
+                    self.upload_view_time_min.setValue(value['range'][0])
+                    self.upload_view_time_max.setValue(value['range'][1])
+                    self.allow_negative_time_cb.setChecked(value['allow_negative'])
                 case 'platform':
                     yt = value['youtube']
                     yt_music = value['music']
@@ -1107,6 +1128,13 @@ class FilterDialog(QDialog, Ui_Dialog):
         self.duration_min.setTime(time(0, 0, 0))
         self.duration_max.setTime(time(0, 0, 0))
         
+        self.upload_view_time_cb.setChecked(False)
+        self.upload_view_time_combo.setCurrentIndex(0)
+        self.upload_view_time_min.setValue(0)
+        self.upload_view_time_max.setValue(0)
+        self.allow_negative_time_cb.setChecked(False)
+        self.allow_negative_time_cb.setEnabled(False)
+        
         self.platform_both_rb.setChecked(True)
         self.availability_both_rb.setChecked(True)
         
@@ -1168,6 +1196,9 @@ class FilterDialog(QDialog, Ui_Dialog):
                             widget = sub_item.widget()
                             if widget:
                                 widget.setEnabled(enabled)
+        
+        if row_index == 7:
+            self.allow_negative_time_cb.setEnabled(enabled)
 
 
 class AboutDialog(QtWidgets.QDialog):

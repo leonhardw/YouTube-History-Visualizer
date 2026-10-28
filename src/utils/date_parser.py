@@ -48,6 +48,14 @@ def format_seconds(seconds):
         return f'{secs} s'
 
 
+def format_hours(hours):
+    if hours >= 24:
+        days = hours // 24
+        return f'{days} d'
+    else:
+        return f'{hours} h'
+
+
 if __name__ == '__main__':
     tests = [
         'May 13, 2026, 02:00:00 PM UTC+08:00',  # China

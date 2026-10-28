@@ -109,14 +109,14 @@ class WatchHistoryParser:
     def add_missing_metadata(self):
         links = []
         for item in self.watch_data:
-            if not item['views'] and not item['deleted']:
+            if item['views'] is None and not item['deleted']:
                 links.append(item['id'])
         yt_api_metadata.add_video_details(links, self.watch_data, self.yt_api_key, progress_callback=self.progress_callback)
     
     def get_missing_metadata_count(self):
         count = 0
         for item in self.watch_data:
-            if not item['views'] and not item['deleted']:
+            if item['views'] is None and not item['deleted']:
                 count += 1
         return count
     
