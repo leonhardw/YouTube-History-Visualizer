@@ -97,10 +97,6 @@ class WatchHistoryParser:
             wd_dict.update(metadata)
             self.watch_data.append(wd_dict)
         
-        # if get_metadata:
-        #     links = self.get_all_ids()
-        #     yt_api_metadata.add_video_details(links, self.watch_data, self.yt_api_key, progress_callback=self.progress_callback)
-        
         if add_occurences:
             self.add_total_occurences()
         

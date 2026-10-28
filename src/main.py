@@ -1,3 +1,5 @@
+#!python3.14
+
 #  Copyright (C) 2026  leonhardw
 #
 #  This program is free software: you can redistribute it and/or modify

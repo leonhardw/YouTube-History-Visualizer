@@ -319,15 +319,6 @@ class WatchHistoryAnalyzer:
         
         return dict(videos_per_duration), formatted_durations
     
-    def get_own_views_per_video(self):
-        own_views_per_video = set()
-        for video in self.watch_data:
-            own_views_per_video.add((video['id'], video['title'], video['total_occurences']))
-        own_views_per_video = list(own_views_per_video)
-        own_views_per_video.sort(key=lambda x: x[2], reverse=True)
-        own_views_per_video = [i for i in own_views_per_video if i[2] > 1]
-        return own_views_per_video
-    
     def set_date_range(self, start=None, end=None, mode=VIEW):
         if start:
             if mode == VIEW:

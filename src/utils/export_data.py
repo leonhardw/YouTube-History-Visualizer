@@ -36,6 +36,6 @@ def save_as_csv(filename, data):
 
 def save_watch_data(filename, data, remove_duplicates=True, metadata_included=False):
     if remove_duplicates:
-        data = advanced_filters.remove_duplicates(data)
+        data = advanced_filters.remove_exact_duplicates(data)
     with open(filename, 'wb') as f:
         pickle.dump([metadata_included] + data, f)

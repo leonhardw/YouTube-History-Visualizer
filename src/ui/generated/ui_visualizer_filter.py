@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'visualizer_filter.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.11.0
+## Created by: Qt User Interface Compiler version 6.12.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -28,7 +28,7 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         if not Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
-        Dialog.resize(660, 521)
+        Dialog.resize(660, 510)
         Dialog.setSizeGripEnabled(True)
         Dialog.setModal(True)
         self.verticalLayout_3 = QVBoxLayout(Dialog)
@@ -46,6 +46,11 @@ class Ui_Dialog(object):
         self.properties_grid.setObjectName(u"properties_grid")
         self.properties_grid.setHorizontalSpacing(6)
         self.properties_grid.setContentsMargins(0, -1, -1, -1)
+        self.label_7 = QLabel(self.property_filters_tab)
+        self.label_7.setObjectName(u"label_7")
+
+        self.properties_grid.addWidget(self.label_7, 6, 3, 1, 1, Qt.AlignmentFlag.AlignHCenter)
+
         self.channel_combo = QComboBox(self.property_filters_tab)
         self.channel_combo.addItem("")
         self.channel_combo.addItem("")
@@ -53,15 +58,19 @@ class Ui_Dialog(object):
 
         self.properties_grid.addWidget(self.channel_combo, 1, 1, 1, 1)
 
-        self.views_cb = QCheckBox(self.property_filters_tab)
-        self.views_cb.setObjectName(u"views_cb")
+        self.userviews_channel_combo = QComboBox(self.property_filters_tab)
+        self.userviews_channel_combo.addItem("")
+        self.userviews_channel_combo.addItem("")
+        self.userviews_channel_combo.setObjectName(u"userviews_channel_combo")
 
-        self.properties_grid.addWidget(self.views_cb, 2, 0, 1, 1)
+        self.properties_grid.addWidget(self.userviews_channel_combo, 4, 1, 1, 1)
 
-        self.channel_cb = QCheckBox(self.property_filters_tab)
-        self.channel_cb.setObjectName(u"channel_cb")
+        self.userviews_max = QSpinBox(self.property_filters_tab)
+        self.userviews_max.setObjectName(u"userviews_max")
+        self.userviews_max.setProperty(u"showGroupSeparator", True)
+        self.userviews_max.setMaximum(100000)
 
-        self.properties_grid.addWidget(self.channel_cb, 1, 0, 1, 1)
+        self.properties_grid.addWidget(self.userviews_max, 3, 4, 1, 1)
 
         self.userviews_combo = QComboBox(self.property_filters_tab)
         self.userviews_combo.addItem("")
@@ -70,29 +79,19 @@ class Ui_Dialog(object):
 
         self.properties_grid.addWidget(self.userviews_combo, 3, 1, 1, 1)
 
-        self.duration_max = QTimeEdit(self.property_filters_tab)
-        self.duration_max.setObjectName(u"duration_max")
-        self.duration_max.setProperty(u"showGroupSeparator", True)
-        self.duration_max.setCurrentSection(QDateTimeEdit.Section.HourSection)
+        self.userviews_channel_min = QSpinBox(self.property_filters_tab)
+        self.userviews_channel_min.setObjectName(u"userviews_channel_min")
+        self.userviews_channel_min.setProperty(u"showGroupSeparator", True)
+        self.userviews_channel_min.setMaximum(100000)
 
-        self.properties_grid.addWidget(self.duration_max, 6, 4, 1, 1)
+        self.properties_grid.addWidget(self.userviews_channel_min, 4, 2, 1, 1)
 
-        self.label_3 = QLabel(self.property_filters_tab)
-        self.label_3.setObjectName(u"label_3")
+        self.views_combo = QComboBox(self.property_filters_tab)
+        self.views_combo.addItem("")
+        self.views_combo.addItem("")
+        self.views_combo.setObjectName(u"views_combo")
 
-        self.properties_grid.addWidget(self.label_3, 8, 0, 1, 1)
-
-        self.duration_cb = QCheckBox(self.property_filters_tab)
-        self.duration_cb.setObjectName(u"duration_cb")
-
-        self.properties_grid.addWidget(self.duration_cb, 6, 0, 1, 1)
-
-        self.userviews_max = QSpinBox(self.property_filters_tab)
-        self.userviews_max.setObjectName(u"userviews_max")
-        self.userviews_max.setProperty(u"showGroupSeparator", True)
-        self.userviews_max.setMaximum(100000)
-
-        self.properties_grid.addWidget(self.userviews_max, 3, 4, 1, 1)
+        self.properties_grid.addWidget(self.views_combo, 2, 1, 1, 1)
 
         self.availability_hbox = QHBoxLayout()
         self.availability_hbox.setObjectName(u"availability_hbox")
@@ -120,19 +119,46 @@ class Ui_Dialog(object):
 
         self.properties_grid.addLayout(self.availability_hbox, 8, 1, 1, 4)
 
-        self.views_max = IntegerOnlyDoubleSpinBox(self.property_filters_tab)
-        self.views_max.setObjectName(u"views_max")
-        self.views_max.setProperty(u"showGroupSeparator", True)
-        self.views_max.setDecimals(0)
-        self.views_max.setMaximum(30000000000.000000000000000)
-        self.views_max.setSingleStep(1000.000000000000000)
+        self.languages_cb = QCheckBox(self.property_filters_tab)
+        self.languages_cb.setObjectName(u"languages_cb")
 
-        self.properties_grid.addWidget(self.views_max, 2, 4, 1, 1)
+        self.properties_grid.addWidget(self.languages_cb, 5, 0, 1, 1)
 
         self.userviews_cb = QCheckBox(self.property_filters_tab)
         self.userviews_cb.setObjectName(u"userviews_cb")
 
         self.properties_grid.addWidget(self.userviews_cb, 3, 0, 1, 1)
+
+        self.duration_cb = QCheckBox(self.property_filters_tab)
+        self.duration_cb.setObjectName(u"duration_cb")
+
+        self.properties_grid.addWidget(self.duration_cb, 6, 0, 1, 1)
+
+        self.label = QLabel(self.property_filters_tab)
+        self.label.setObjectName(u"label")
+
+        self.properties_grid.addWidget(self.label, 7, 0, 1, 1)
+
+        self.views_min = IntegerOnlyDoubleSpinBox(self.property_filters_tab)
+        self.views_min.setObjectName(u"views_min")
+        self.views_min.setProperty(u"showGroupSeparator", True)
+        self.views_min.setDecimals(0)
+        self.views_min.setMaximum(30000000000.000000000000000)
+        self.views_min.setSingleStep(1000.000000000000000)
+
+        self.properties_grid.addWidget(self.views_min, 2, 2, 1, 1)
+
+        self.channel_cb = QCheckBox(self.property_filters_tab)
+        self.channel_cb.setObjectName(u"channel_cb")
+
+        self.properties_grid.addWidget(self.channel_cb, 1, 0, 1, 1)
+
+        self.userviews_min = QSpinBox(self.property_filters_tab)
+        self.userviews_min.setObjectName(u"userviews_min")
+        self.userviews_min.setProperty(u"showGroupSeparator", True)
+        self.userviews_min.setMaximum(100000)
+
+        self.properties_grid.addWidget(self.userviews_min, 3, 2, 1, 1)
 
         self.platform_hbox = QHBoxLayout()
         self.platform_hbox.setObjectName(u"platform_hbox")
@@ -160,15 +186,41 @@ class Ui_Dialog(object):
 
         self.properties_grid.addLayout(self.platform_hbox, 7, 1, 1, 4)
 
-        self.languages_cb = QCheckBox(self.property_filters_tab)
-        self.languages_cb.setObjectName(u"languages_cb")
+        self.duration_max = QTimeEdit(self.property_filters_tab)
+        self.duration_max.setObjectName(u"duration_max")
+        self.duration_max.setProperty(u"showGroupSeparator", True)
+        self.duration_max.setCurrentSection(QDateTimeEdit.Section.HourSection)
 
-        self.properties_grid.addWidget(self.languages_cb, 5, 0, 1, 1)
+        self.properties_grid.addWidget(self.duration_max, 6, 4, 1, 1)
 
         self.userviews_channel_cb = QCheckBox(self.property_filters_tab)
         self.userviews_channel_cb.setObjectName(u"userviews_channel_cb")
 
         self.properties_grid.addWidget(self.userviews_channel_cb, 4, 0, 1, 1)
+
+        self.views_max = IntegerOnlyDoubleSpinBox(self.property_filters_tab)
+        self.views_max.setObjectName(u"views_max")
+        self.views_max.setProperty(u"showGroupSeparator", True)
+        self.views_max.setDecimals(0)
+        self.views_max.setMaximum(30000000000.000000000000000)
+        self.views_max.setSingleStep(1000.000000000000000)
+
+        self.properties_grid.addWidget(self.views_max, 2, 4, 1, 1)
+
+        self.languages_edit = QLineEdit(self.property_filters_tab)
+        self.languages_edit.setObjectName(u"languages_edit")
+
+        self.properties_grid.addWidget(self.languages_edit, 5, 2, 1, 3)
+
+        self.label_5 = QLabel(self.property_filters_tab)
+        self.label_5.setObjectName(u"label_5")
+
+        self.properties_grid.addWidget(self.label_5, 3, 3, 1, 1, Qt.AlignmentFlag.AlignHCenter)
+
+        self.label_4 = QLabel(self.property_filters_tab)
+        self.label_4.setObjectName(u"label_4")
+
+        self.properties_grid.addWidget(self.label_4, 2, 3, 1, 1, Qt.AlignmentFlag.AlignHCenter)
 
         self.languages_combo = QComboBox(self.property_filters_tab)
         self.languages_combo.addItem("")
@@ -177,16 +229,6 @@ class Ui_Dialog(object):
 
         self.properties_grid.addWidget(self.languages_combo, 5, 1, 1, 1)
 
-        self.title_cb = QCheckBox(self.property_filters_tab)
-        self.title_cb.setObjectName(u"title_cb")
-
-        self.properties_grid.addWidget(self.title_cb, 0, 0, 1, 1)
-
-        self.label = QLabel(self.property_filters_tab)
-        self.label.setObjectName(u"label")
-
-        self.properties_grid.addWidget(self.label, 7, 0, 1, 1)
-
         self.duration_combo = QComboBox(self.property_filters_tab)
         self.duration_combo.addItem("")
         self.duration_combo.addItem("")
@@ -194,19 +236,33 @@ class Ui_Dialog(object):
 
         self.properties_grid.addWidget(self.duration_combo, 6, 1, 1, 1)
 
-        self.views_combo = QComboBox(self.property_filters_tab)
-        self.views_combo.addItem("")
-        self.views_combo.addItem("")
-        self.views_combo.setObjectName(u"views_combo")
+        self.duration_min = QTimeEdit(self.property_filters_tab)
+        self.duration_min.setObjectName(u"duration_min")
+        self.duration_min.setInputMethodHints(Qt.InputMethodHint.ImhPreferNumbers)
+        self.duration_min.setProperty(u"showGroupSeparator", True)
+        self.duration_min.setCurrentSection(QDateTimeEdit.Section.HourSection)
 
-        self.properties_grid.addWidget(self.views_combo, 2, 1, 1, 1)
+        self.properties_grid.addWidget(self.duration_min, 6, 2, 1, 1)
 
-        self.userviews_channel_combo = QComboBox(self.property_filters_tab)
-        self.userviews_channel_combo.addItem("")
-        self.userviews_channel_combo.addItem("")
-        self.userviews_channel_combo.setObjectName(u"userviews_channel_combo")
+        self.title_hbox = QHBoxLayout()
+        self.title_hbox.setObjectName(u"title_hbox")
+        self.title_regex_cb = QCheckBox(self.property_filters_tab)
+        self.title_regex_cb.setObjectName(u"title_regex_cb")
 
-        self.properties_grid.addWidget(self.userviews_channel_combo, 4, 1, 1, 1)
+        self.title_hbox.addWidget(self.title_regex_cb)
+
+        self.title_edit = QLineEdit(self.property_filters_tab)
+        self.title_edit.setObjectName(u"title_edit")
+
+        self.title_hbox.addWidget(self.title_edit)
+
+
+        self.properties_grid.addLayout(self.title_hbox, 0, 2, 1, 3)
+
+        self.views_cb = QCheckBox(self.property_filters_tab)
+        self.views_cb.setObjectName(u"views_cb")
+
+        self.properties_grid.addWidget(self.views_cb, 2, 0, 1, 1)
 
         self.title_combo = QComboBox(self.property_filters_tab)
         self.title_combo.addItem("")
@@ -222,61 +278,15 @@ class Ui_Dialog(object):
 
         self.properties_grid.addWidget(self.userviews_channel_max, 4, 4, 1, 1)
 
-        self.views_min = IntegerOnlyDoubleSpinBox(self.property_filters_tab)
-        self.views_min.setObjectName(u"views_min")
-        self.views_min.setProperty(u"showGroupSeparator", True)
-        self.views_min.setDecimals(0)
-        self.views_min.setMaximum(30000000000.000000000000000)
-        self.views_min.setSingleStep(1000.000000000000000)
-
-        self.properties_grid.addWidget(self.views_min, 2, 2, 1, 1)
-
-        self.userviews_min = QSpinBox(self.property_filters_tab)
-        self.userviews_min.setObjectName(u"userviews_min")
-        self.userviews_min.setProperty(u"showGroupSeparator", True)
-        self.userviews_min.setMaximum(100000)
-
-        self.properties_grid.addWidget(self.userviews_min, 3, 2, 1, 1)
-
-        self.userviews_channel_min = QSpinBox(self.property_filters_tab)
-        self.userviews_channel_min.setObjectName(u"userviews_channel_min")
-        self.userviews_channel_min.setProperty(u"showGroupSeparator", True)
-        self.userviews_channel_min.setMaximum(100000)
-
-        self.properties_grid.addWidget(self.userviews_channel_min, 4, 2, 1, 1)
-
-        self.duration_min = QTimeEdit(self.property_filters_tab)
-        self.duration_min.setObjectName(u"duration_min")
-        self.duration_min.setInputMethodHints(Qt.InputMethodHint.ImhPreferNumbers)
-        self.duration_min.setProperty(u"showGroupSeparator", True)
-        self.duration_min.setCurrentSection(QDateTimeEdit.Section.HourSection)
-
-        self.properties_grid.addWidget(self.duration_min, 6, 2, 1, 1)
-
-        self.label_4 = QLabel(self.property_filters_tab)
-        self.label_4.setObjectName(u"label_4")
-
-        self.properties_grid.addWidget(self.label_4, 2, 3, 1, 1, Qt.AlignmentFlag.AlignHCenter)
-
-        self.label_5 = QLabel(self.property_filters_tab)
-        self.label_5.setObjectName(u"label_5")
-
-        self.properties_grid.addWidget(self.label_5, 3, 3, 1, 1, Qt.AlignmentFlag.AlignHCenter)
-
         self.label_6 = QLabel(self.property_filters_tab)
         self.label_6.setObjectName(u"label_6")
 
         self.properties_grid.addWidget(self.label_6, 4, 3, 1, 1, Qt.AlignmentFlag.AlignHCenter)
 
-        self.label_7 = QLabel(self.property_filters_tab)
-        self.label_7.setObjectName(u"label_7")
+        self.title_cb = QCheckBox(self.property_filters_tab)
+        self.title_cb.setObjectName(u"title_cb")
 
-        self.properties_grid.addWidget(self.label_7, 6, 3, 1, 1, Qt.AlignmentFlag.AlignHCenter)
-
-        self.languages_edit = QLineEdit(self.property_filters_tab)
-        self.languages_edit.setObjectName(u"languages_edit")
-
-        self.properties_grid.addWidget(self.languages_edit, 5, 2, 1, 3)
+        self.properties_grid.addWidget(self.title_cb, 0, 0, 1, 1)
 
         self.channel_hbox = QHBoxLayout()
         self.channel_hbox.setObjectName(u"channel_hbox")
@@ -293,20 +303,23 @@ class Ui_Dialog(object):
 
         self.properties_grid.addLayout(self.channel_hbox, 1, 2, 1, 3)
 
-        self.title_hbox = QHBoxLayout()
-        self.title_hbox.setObjectName(u"title_hbox")
-        self.title_regex_cb = QCheckBox(self.property_filters_tab)
-        self.title_regex_cb.setObjectName(u"title_regex_cb")
+        self.label_3 = QLabel(self.property_filters_tab)
+        self.label_3.setObjectName(u"label_3")
 
-        self.title_hbox.addWidget(self.title_regex_cb)
+        self.properties_grid.addWidget(self.label_3, 8, 0, 1, 1)
 
-        self.title_edit = QLineEdit(self.property_filters_tab)
-        self.title_edit.setObjectName(u"title_edit")
+        self.label_15 = QLabel(self.property_filters_tab)
+        self.label_15.setObjectName(u"label_15")
 
-        self.title_hbox.addWidget(self.title_edit)
+        self.properties_grid.addWidget(self.label_15, 9, 0, 1, 1)
 
+        self.duplicates_combo = QComboBox(self.property_filters_tab)
+        self.duplicates_combo.addItem("")
+        self.duplicates_combo.addItem("")
+        self.duplicates_combo.addItem("")
+        self.duplicates_combo.setObjectName(u"duplicates_combo")
 
-        self.properties_grid.addLayout(self.title_hbox, 0, 2, 1, 3)
+        self.properties_grid.addWidget(self.duplicates_combo, 9, 1, 1, 2)
 
 
         self.verticalLayout_5.addLayout(self.properties_grid)
@@ -917,51 +930,56 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Dialog", None))
+        self.label_7.setText(QCoreApplication.translate("Dialog", u"to", None))
         self.channel_combo.setItemText(0, QCoreApplication.translate("Dialog", u"contains", None))
         self.channel_combo.setItemText(1, QCoreApplication.translate("Dialog", u"does not contain", None))
-
-        self.views_cb.setText(QCoreApplication.translate("Dialog", u"Total views", None))
-        self.channel_cb.setText(QCoreApplication.translate("Dialog", u"Channel name", None))
-        self.userviews_combo.setItemText(0, QCoreApplication.translate("Dialog", u"in range", None))
-        self.userviews_combo.setItemText(1, QCoreApplication.translate("Dialog", u"not in range", None))
-
-        self.duration_max.setDisplayFormat(QCoreApplication.translate("Dialog", u"HH:mm:ss", None))
-        self.label_3.setText(QCoreApplication.translate("Dialog", u"Availability:", None))
-        self.duration_cb.setText(QCoreApplication.translate("Dialog", u"Video duration", None))
-        self.available_rb.setText(QCoreApplication.translate("Dialog", u"Available", None))
-        self.deleted_rb.setText(QCoreApplication.translate("Dialog", u"Deleted", None))
-        self.availability_both_rb.setText(QCoreApplication.translate("Dialog", u"Both", None))
-        self.userviews_cb.setText(QCoreApplication.translate("Dialog", u"My views", None))
-        self.youtube_rb.setText(QCoreApplication.translate("Dialog", u"YouTube", None))
-        self.music_rb.setText(QCoreApplication.translate("Dialog", u"YouTube Music", None))
-        self.platform_both_rb.setText(QCoreApplication.translate("Dialog", u"Both", None))
-        self.languages_cb.setText(QCoreApplication.translate("Dialog", u"Languages", None))
-        self.userviews_channel_cb.setText(QCoreApplication.translate("Dialog", u"My views per channel", None))
-        self.languages_combo.setItemText(0, QCoreApplication.translate("Dialog", u"include", None))
-        self.languages_combo.setItemText(1, QCoreApplication.translate("Dialog", u"exclude", None))
-
-        self.title_cb.setText(QCoreApplication.translate("Dialog", u"Title", None))
-        self.label.setText(QCoreApplication.translate("Dialog", u"Platform:", None))
-        self.duration_combo.setItemText(0, QCoreApplication.translate("Dialog", u"in range", None))
-        self.duration_combo.setItemText(1, QCoreApplication.translate("Dialog", u"not in range", None))
-
-        self.views_combo.setItemText(0, QCoreApplication.translate("Dialog", u"in range", None))
-        self.views_combo.setItemText(1, QCoreApplication.translate("Dialog", u"not in range", None))
 
         self.userviews_channel_combo.setItemText(0, QCoreApplication.translate("Dialog", u"in range", None))
         self.userviews_channel_combo.setItemText(1, QCoreApplication.translate("Dialog", u"not in range", None))
 
+        self.userviews_combo.setItemText(0, QCoreApplication.translate("Dialog", u"in range", None))
+        self.userviews_combo.setItemText(1, QCoreApplication.translate("Dialog", u"not in range", None))
+
+        self.views_combo.setItemText(0, QCoreApplication.translate("Dialog", u"in range", None))
+        self.views_combo.setItemText(1, QCoreApplication.translate("Dialog", u"not in range", None))
+
+        self.available_rb.setText(QCoreApplication.translate("Dialog", u"Available", None))
+        self.deleted_rb.setText(QCoreApplication.translate("Dialog", u"Deleted", None))
+        self.availability_both_rb.setText(QCoreApplication.translate("Dialog", u"Both", None))
+        self.languages_cb.setText(QCoreApplication.translate("Dialog", u"Languages", None))
+        self.userviews_cb.setText(QCoreApplication.translate("Dialog", u"My views", None))
+        self.duration_cb.setText(QCoreApplication.translate("Dialog", u"Video duration", None))
+        self.label.setText(QCoreApplication.translate("Dialog", u"Platform:", None))
+        self.channel_cb.setText(QCoreApplication.translate("Dialog", u"Channel name", None))
+        self.youtube_rb.setText(QCoreApplication.translate("Dialog", u"YouTube", None))
+        self.music_rb.setText(QCoreApplication.translate("Dialog", u"YouTube Music", None))
+        self.platform_both_rb.setText(QCoreApplication.translate("Dialog", u"Both", None))
+        self.duration_max.setDisplayFormat(QCoreApplication.translate("Dialog", u"HH:mm:ss", None))
+        self.userviews_channel_cb.setText(QCoreApplication.translate("Dialog", u"My views per channel", None))
+        self.languages_edit.setPlaceholderText(QCoreApplication.translate("Dialog", u"ISO codes, e.g. en, de, fr", None))
+        self.label_5.setText(QCoreApplication.translate("Dialog", u"to", None))
+        self.label_4.setText(QCoreApplication.translate("Dialog", u"to", None))
+        self.languages_combo.setItemText(0, QCoreApplication.translate("Dialog", u"include", None))
+        self.languages_combo.setItemText(1, QCoreApplication.translate("Dialog", u"exclude", None))
+
+        self.duration_combo.setItemText(0, QCoreApplication.translate("Dialog", u"in range", None))
+        self.duration_combo.setItemText(1, QCoreApplication.translate("Dialog", u"not in range", None))
+
+        self.duration_min.setDisplayFormat(QCoreApplication.translate("Dialog", u"HH:mm:ss", None))
+        self.title_regex_cb.setText(QCoreApplication.translate("Dialog", u"RegEx", None))
+        self.views_cb.setText(QCoreApplication.translate("Dialog", u"Total views", None))
         self.title_combo.setItemText(0, QCoreApplication.translate("Dialog", u"contains", None))
         self.title_combo.setItemText(1, QCoreApplication.translate("Dialog", u"does not contain", None))
 
-        self.duration_min.setDisplayFormat(QCoreApplication.translate("Dialog", u"HH:mm:ss", None))
-        self.label_4.setText(QCoreApplication.translate("Dialog", u"to", None))
-        self.label_5.setText(QCoreApplication.translate("Dialog", u"to", None))
         self.label_6.setText(QCoreApplication.translate("Dialog", u"to", None))
-        self.label_7.setText(QCoreApplication.translate("Dialog", u"to", None))
-        self.languages_edit.setPlaceholderText(QCoreApplication.translate("Dialog", u"ISO codes, e.g. en, de, fr", None))
+        self.title_cb.setText(QCoreApplication.translate("Dialog", u"Title", None))
         self.channel_regex_cb.setText(QCoreApplication.translate("Dialog", u"RegEx", None))
-        self.title_regex_cb.setText(QCoreApplication.translate("Dialog", u"RegEx", None))
+        self.label_3.setText(QCoreApplication.translate("Dialog", u"Availability:", None))
+        self.label_15.setText(QCoreApplication.translate("Dialog", u"Duplicates:", None))
+        self.duplicates_combo.setItemText(0, QCoreApplication.translate("Dialog", u"Show all duplicates", None))
+        self.duplicates_combo.setItemText(1, QCoreApplication.translate("Dialog", u"Only include oldest view", None))
+        self.duplicates_combo.setItemText(2, QCoreApplication.translate("Dialog", u"Only include newest view", None))
+
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.property_filters_tab), QCoreApplication.translate("Dialog", u"Property filters", None))
         self.date_watched_box.setTitle(QCoreApplication.translate("Dialog", u"Watched: Date Range", None))
         self.label_2.setText(QCoreApplication.translate("Dialog", u"From:", None))

@@ -105,6 +105,16 @@ def filter_to_str(filter_, view_date_range=None, upload_date_range=None):
             filter_strs.append(f'{availability} {platform}')
         else:
             filter_strs.append(availability)
+        
+        # ------------ Duplicates ---------------#
+        duplicates = filter_['duplicates']['mode']
+        if duplicates == 'all':
+            pass
+        elif duplicates == 'oldest':
+            filter_strs.append(f'No duplicates (Only oldest)')
+        elif duplicates == 'newest':
+            filter_strs.append(f'No duplicates (Only newest)')
+        
         for key, value in filter_.items():
             include = '' if value['include'] else 'not '
             match key:
@@ -149,7 +159,8 @@ def filter_to_str(filter_, view_date_range=None, upload_date_range=None):
                     weekdays = tuple(int_to_weekdays[i] for i in value['values'])
                     filter_strs.append(f'Uploaded on weekdays: {include}{weekdays}')
         
-        return '; '.join(filter_strs)
+        filter_str = '; '.join(filter_strs)
+        return filter_str
     else:
         return 'No filters'
 
@@ -157,13 +168,47 @@ def filter_to_str(filter_, view_date_range=None, upload_date_range=None):
 def advanced_filters(watch_data, filters_list):
     all_matching_items = []
     for filters in filters_list:
-        all_matching_items.extend(process_filter(watch_data, filters))
+        matching_items = process_filter(watch_data, filters)
+        duplicate_mode = filters['duplicates']['mode']
+        if duplicate_mode == 'all':
+            pass
+        elif duplicate_mode in ('newest', 'oldest'):
+            matching_items = remove_duplicates(matching_items, duplicate_mode)
+        else:
+            raise ValueError(f'Invalid duplicate mode: {duplicate_mode}')
+
+        
+        all_matching_items.extend(matching_items)
     
-    all_matching_items = remove_duplicates(all_matching_items)
+    all_matching_items = remove_exact_duplicates(all_matching_items)
     return all_matching_items
 
 
-def remove_duplicates(dict_list):
+def remove_duplicates(items, keep='oldest'):
+    items_to_keep = {}
+    
+    for item in items:
+        if item['link'] not in items_to_keep.keys():
+            items_to_keep[item['link']] = item
+        else:
+            if keep == 'oldest':
+                if item['time_watched'] < items_to_keep[item['link']]['time_watched']:
+                    # current item is older than saved
+                    items_to_keep[item['link']] = item
+                else:
+                    continue
+            elif keep == 'newest':
+                if item['time_watched'] > items_to_keep[item['link']]['time_watched']:
+                    # current item is older than saved
+                    items_to_keep[item['link']] = item
+                else:
+                    continue
+    
+    return list(items_to_keep.values())
+
+
+def remove_exact_duplicates(dict_list):
+    """Removes only duplicates with exact same data (same time watched), not just same link."""
     seen = set()
     unique_data = []
     
@@ -179,6 +224,7 @@ def remove_duplicates(dict_list):
 
 def process_filter(watch_data, filters):
     matching_items = []
+    existing_items = {}
     for item in watch_data:
         filters_to_check = []
         for key, value in filters.items():
@@ -362,6 +408,7 @@ def process_filter(watch_data, filters):
         
         if all(filters_to_check):
             matching_items.append(item)
+            existing_items[item['link']] = item['time_watched']
     
     return matching_items
 

@@ -105,6 +105,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     intervals = {0: 5, 1: 10, 2: 15, 3: 20, 4: 30, 5: 60}
     
+    default_filters = {'platform': {'include': True, 'youtube': True, 'music': True},
+                       'availability': {'include': True, 'available': True, 'deleted': True},
+                       'duplicates': {'include': True, 'mode': 'all'}}
+    
     def __init__(self):
         super().__init__()
         self.setupUi(self)
@@ -488,8 +492,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.table_view_dialog.exec()
     
     def add_filter(self):
-        self.filters.append(
-            {'platform': {'include': True, 'youtube': True, 'music': True}, 'availability': {'include': True, 'available': True, 'deleted': True}})
+        self.filters.append(self.default_filters)
         self.filters_list.addItem(filter_to_str(self.filters[-1]))
         self.filters_list.setCurrentRow(self.filters_list.count() - 1)
         result = self.edit_filter()
@@ -532,8 +535,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         else:
             self.set_data_buttons_enabled(False)
         
-        if len(self.filters) == 1 and self.filters[0] == {'platform': {'include': True, 'youtube': True, 'music': True},
-                                                          'availability': {'include': True, 'available': True, 'deleted': True}}:
+        if len(self.filters) == 1 and self.filters[0] == self.default_filters:
             self.delete_filter_btn.setEnabled(False)
         else:
             self.delete_filter_btn.setEnabled(True)
@@ -541,8 +543,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def add_default_filter(self):
         self.filters.clear()
         self.filters_list.clear()
-        self.filters.append(
-            {'platform': {'include': True, 'youtube': True, 'music': True}, 'availability': {'include': True, 'available': True, 'deleted': True}})
+        self.filters.append(self.default_filters)
         self.filters_list.addItem(filter_to_str(self.filters[-1]))
         self.filters_list.setCurrentRow(self.filters_list.count() - 1)
         self.delete_filter_btn.setEnabled(False)
@@ -838,6 +839,21 @@ class FilterDialog(QDialog, Ui_Dialog):
         include_available = self.available_rb.isChecked() or self.availability_both_rb.isChecked()
         include_deleted = self.deleted_rb.isChecked() or self.availability_both_rb.isChecked()
         self.filter_data['availability'] = {'include': True, 'available': include_available, 'deleted': include_deleted}
+        
+        duplicate_mode = self.duplicates_combo.currentIndex()
+        
+        match duplicate_mode:
+            case 0:
+                duplicates = 'all'
+            case 1:
+                duplicates = 'oldest'
+            case 2:
+                duplicates = 'newest'
+            case _:
+                duplicates = 'all'
+        
+        self.filter_data['duplicates'] = {'include': True, 'mode': duplicates}
+        
         
         # ---------- Watched time filters ---------- #
         if self.date_watched_box.isChecked():
