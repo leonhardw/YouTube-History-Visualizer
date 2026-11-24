@@ -35,7 +35,7 @@ class WatchHistoryParser:
             with open(self.filename, 'rb') as f:
                 self.data = f.read()
             self.data = self.data.decode('utf-8')
-            self.deleted_count = self.parse_body(get_metadata, add_occurences, only_total_count=only_total_count)
+            self.deleted_count = self.parse_body(add_occurences, only_total_count=only_total_count)
         elif data_file:
             with open(data_file, 'rb') as f:
                 data = pickle.load(f)
@@ -43,7 +43,7 @@ class WatchHistoryParser:
         else:
             self.metadata_included, self.watch_data = watch_data[0], watch_data[1:]
     
-    def parse_body(self, get_metadata=False, add_occurences=False, only_total_count=False):
+    def parse_body(self, add_occurences=False, only_total_count=False):
         deleted_count = 0
         self.total_items = 0
         
@@ -147,3 +147,10 @@ class WatchHistoryParser:
         for item in self.watch_data:
             item['total_occurences'] = total_occurences[item['link']]
             item['channel_occurences'] = channel_occurences[item['channel_link']]
+    
+    def add_upload_view_delta(self):
+        for item in self.watch_data:
+            upload_date = item['upload_date']
+            view_time = item['time_watched']
+            if upload_date and view_time:
+                item['upload_view_delta'] = view_time - upload_date
